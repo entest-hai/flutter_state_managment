@@ -1,14 +1,18 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_provider/weatherapp.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'counterblocapp.dart';
 import 'counterproviderapp.dart';
 import 'listtaskproviderapp.dart';
 import 'listtaskblocapp.dart';
+import 'weatherapp.dart';
 
 void main() {
-  runApp(ListTaskBlocAppTest());
+  Bloc.observer = SimpleBlocObserver();
+
+  runApp(WeatherApp());
 
   // runApp(MultiProvider(
   //   providers: [

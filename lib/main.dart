@@ -8,11 +8,16 @@ import 'counterproviderapp.dart';
 import 'listtaskproviderapp.dart';
 import 'listtaskblocapp.dart';
 import 'weatherapp.dart';
+import 'testpaddingapp.dart';
+import 'testscrollview.dart';
 
 void main() {
-  Bloc.observer = SimpleBlocObserver();
+  // Weather app with observer
+  // Bloc.observer = SimpleBlocObserver();
+  // runApp(WeatherApp());
 
-  runApp(WeatherApp());
+  // runApp(TestPaddingApp());
+  runApp(FoodApp());
 
   // runApp(MultiProvider(
   //   providers: [

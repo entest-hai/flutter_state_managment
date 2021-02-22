@@ -20,33 +20,87 @@ class FormAppHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Form(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextFormField(
-              validator: (value) {
-                if (value.isEmpty) {
-                  return 'Please enter some text';
-                }
-                return null;
-              },
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: ElevatedButton(
-                child: Text("Submit"),
-                onPressed: () {
-                  if (_formKey.currentState.validate()) {
-                    Scaffold.of(context).showSnackBar(
-                        SnackBar(content: Text("Processing Data")));
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextFormField(
+                decoration: InputDecoration(
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: BorderSide(color: Colors.blue, width: 2.0),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        borderSide: BorderSide(color: Colors.blue, width: 2.0)),
+                    icon: Icon(Icons.email),
+                    hintText: "Email"),
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter some text';
                   }
+                  return null;
                 },
               ),
-            )
-          ],
-        ));
+              TextFormField(
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                    icon: Icon(Icons.lock),
+                    hintText: "Password"),
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                },
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.blue, width: 3),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 6,
+                          offset: Offset(0, 2))
+                    ]),
+                height: 60,
+                child: TextField(
+                  keyboardType: TextInputType.emailAddress,
+                  style: TextStyle(color: Colors.black87),
+                  decoration: InputDecoration(
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.only(top: 14),
+                      prefixIcon: Icon(
+                        Icons.email,
+                        color: Colors.green,
+                      ),
+                      hintText: "Email",
+                      hintStyle: TextStyle(color: Colors.grey)),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: ElevatedButton(
+                  child: Text("Submit"),
+                  onPressed: () {
+                    if (_formKey.currentState.validate()) {
+                      Scaffold.of(context).showSnackBar(
+                          SnackBar(content: Text("Processing Data")));
+                    }
+                  },
+                ),
+              )
+            ],
+          )),
+    );
   }
 }
 
@@ -126,14 +180,14 @@ class _LoginScreenState extends State<LoginScreen> {
             print("tap login button");
           },
           elevation: 5,
-          padding: EdgeInsets.all(25),
+          padding: EdgeInsets.all(20),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           color: Colors.white,
           child: Text(
-            'Login',
+            'LOGIN',
             style: TextStyle(
-                color: Colors.green, fontSize: 18, fontWeight: FontWeight.bold),
+                color: Colors.green, fontSize: 16, fontWeight: FontWeight.bold),
           ),
         ),
       ),

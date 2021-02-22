@@ -10,6 +10,7 @@ import 'listtaskblocapp.dart';
 import 'weatherapp.dart';
 import 'testpaddingapp.dart';
 import 'testscrollview.dart';
+import 'testformvalidation.dart';
 
 void main() {
   // Weather app with observer
@@ -17,7 +18,8 @@ void main() {
   // runApp(WeatherApp());
 
   // runApp(TestPaddingApp());
-  runApp(FoodApp());
+  // runApp(FoodApp());
+  runApp(LoginApp());
 
   // runApp(MultiProvider(
   //   providers: [

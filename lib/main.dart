@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_provider/testlistswipe.dart';
 import 'package:flutter_provider/weatherapp.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,6 +12,7 @@ import 'weatherapp.dart';
 import 'testpaddingapp.dart';
 import 'testscrollview.dart';
 import 'testformvalidation.dart';
+import 'testlistswipe.dart';
 
 void main() {
   // Weather app with observer
@@ -20,7 +22,8 @@ void main() {
   // runApp(TestPaddingApp());
   // runApp(FoodApp());
   // runApp(LoginApp());
-  runApp(FormApp());
+  // runApp(ListSwipe());
+  runApp(GestureDemoApp());
 
   // runApp(MultiProvider(
   //   providers: [

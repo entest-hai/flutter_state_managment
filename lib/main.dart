@@ -13,6 +13,7 @@ import 'testpaddingapp.dart';
 import 'testscrollview.dart';
 import 'testformvalidation.dart';
 import 'testlistswipe.dart';
+import 'infinitelistapp.dart';
 
 void main() {
   // Weather app with observer
@@ -23,7 +24,8 @@ void main() {
   // runApp(FoodApp());
   // runApp(LoginApp());
   // runApp(ListSwipe());
-  runApp(GestureDemoApp());
+  // runApp(GestureDemoApp());
+  runApp(InfiniteListApp());
 
   // runApp(MultiProvider(
   //   providers: [

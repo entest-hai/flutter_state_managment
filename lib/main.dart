@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_provider/pokedexbloc.dart';
 import 'package:flutter_provider/testlistswipe.dart';
 import 'package:flutter_provider/weatherapp.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +26,9 @@ void main() {
   // runApp(LoginApp());
   // runApp(ListSwipe());
   // runApp(GestureDemoApp());
-  runApp(InfiniteListApp());
+  // runApp(InfiniteListApp());
+  runApp(PokedexApp());
+
 
   // runApp(MultiProvider(
   //   providers: [

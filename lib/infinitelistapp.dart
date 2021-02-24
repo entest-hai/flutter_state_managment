@@ -179,7 +179,6 @@ class PostSuccess extends PostState {
 // Bloc
 class PostBloc extends Bloc<PostEvent, PostState> {
   final http.Client httpClient;
-
   PostBloc({@required this.httpClient}) : super(PostInitial());
 
   @override

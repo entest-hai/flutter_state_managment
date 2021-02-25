@@ -38,24 +38,26 @@ class ImageListView extends StatelessWidget {
     return Center(
       child: CarouselSlider(
         options: CarouselOptions(
-          // height: 400.0,
+          height: MediaQuery.of(context).size.height / 3.0,
           viewportFraction: 1.0,
           scrollDirection: Axis.horizontal,
           enlargeCenterPage: true,
         ),
-        items: [1, 2, 3, 4, 5].map((i) {
+        items: [0, 1, 2, 3].map((i) {
           return Builder(builder: (BuildContext context) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
+                height: MediaQuery.of(context).size.height / 3.0,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(color: Colors.green),
                 child: Stack(
                   children: [
                     Image.network(
                       imgList[i],
-                      fit: BoxFit.cover,
-                      width: 1000.0,
+                      fit: BoxFit.fill,
+                      height: MediaQuery.of(context).size.height / 3.0,
+                      width: MediaQuery.of(context).size.width,
                     ),
                     Text(
                       "Image $i",

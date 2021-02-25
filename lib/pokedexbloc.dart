@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
@@ -61,6 +60,7 @@ class PokedexHomePage extends StatelessWidget {
   }
 }
 
+// Data Model 
 class PokemonListing {
   final int id;
   final String name;
@@ -74,11 +74,11 @@ class PokemonListing {
     final name = json['name'];
     final url = json['url'] as String;
     final id = int.parse(url.split('/')[6]);
-
     return PokemonListing(id: id, name: name);
   }
 }
 
+// Parser
 class PokemonPageResponse {
   final List<PokemonListing> pokemonListings;
   final bool canLoadNextPage;
@@ -97,6 +97,7 @@ class PokemonPageResponse {
   }
 }
 
+// Repository and API Request 
 class PokemonRepository {
   final baseUrl = 'pokeapi.co';
   final client = http.Client();
@@ -110,7 +111,6 @@ class PokemonRepository {
     };
 
     final uri = Uri.https(baseUrl, '/api/v2/pokemon', queryParameters);
-
     final response = await client.get(uri);
     final json = jsonDecode(response.body);
 

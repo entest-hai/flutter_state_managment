@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_provider/pokedexbloc.dart';
 import 'package:flutter_provider/testlistswipe.dart';
+import 'package:flutter_provider/testnetworkrequest.dart';
 import 'package:flutter_provider/weatherapp.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,6 +31,7 @@ void main() {
   // runApp(InfiniteListApp());
   // runApp(PokedexApp());
   runApp(TestCarouselSliderApp());
+  // runApp(TestNetworkRequestApp());
 
   // runApp(MultiProvider(
   //   providers: [

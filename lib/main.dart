@@ -18,6 +18,7 @@ import 'testlistswipe.dart';
 import 'infinitelistapp.dart';
 import 'testcarouselslider.dart';
 import 'blocnavigation.dart';
+import 'testcolumnlistview.dart';
 
 void main() {
   // Weather app with observer
@@ -33,7 +34,8 @@ void main() {
   // runApp(PokedexApp());
   // runApp(TestCarouselSliderApp());
   // runApp(TestNetworkRequestApp());
-  runApp(BlocNavApp());
+  // runApp(BlocNavApp());
+  runApp(ColumnListApp());
 
   // runApp(MultiProvider(
   //   providers: [

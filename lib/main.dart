@@ -17,6 +17,7 @@ import 'testformvalidation.dart';
 import 'testlistswipe.dart';
 import 'infinitelistapp.dart';
 import 'testcarouselslider.dart';
+import 'blocnavigation.dart';
 
 void main() {
   // Weather app with observer
@@ -30,8 +31,9 @@ void main() {
   // runApp(GestureDemoApp());
   // runApp(InfiniteListApp());
   // runApp(PokedexApp());
-  runApp(TestCarouselSliderApp());
+  // runApp(TestCarouselSliderApp());
   // runApp(TestNetworkRequestApp());
+  runApp(BlocNavApp());
 
   // runApp(MultiProvider(
   //   providers: [

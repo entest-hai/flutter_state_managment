@@ -19,12 +19,12 @@ import 'infinitelistapp.dart';
 import 'testcarouselslider.dart';
 import 'blocnavigation.dart';
 import 'testcolumnlistview.dart';
+import 'testclippath.dart';
 
 void main() {
   // Weather app with observer
   // Bloc.observer = SimpleBlocObserver();
   // runApp(WeatherApp());
-
   // runApp(TestPaddingApp());
   // runApp(FoodApp());
   // runApp(LoginApp());
@@ -35,7 +35,8 @@ void main() {
   // runApp(TestCarouselSliderApp());
   // runApp(TestNetworkRequestApp());
   // runApp(BlocNavApp());
-  runApp(ColumnListApp());
+  // runApp(ColumnListApp());
+  runApp(ClipPathApp());
 
   // runApp(MultiProvider(
   //   providers: [

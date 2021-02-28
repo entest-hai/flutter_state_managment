@@ -20,6 +20,7 @@ import 'testcarouselslider.dart';
 import 'blocnavigation.dart';
 import 'testcolumnlistview.dart';
 import 'testclippath.dart';
+import 'testcustompainter.dart';
 
 void main() {
   // Weather app with observer
@@ -36,7 +37,8 @@ void main() {
   // runApp(TestNetworkRequestApp());
   // runApp(BlocNavApp());
   // runApp(ColumnListApp());
-  runApp(ClipPathApp());
+  // runApp(ClipPathApp());
+  runApp(CustomPainterApp());
 
   // runApp(MultiProvider(
   //   providers: [

@@ -21,6 +21,7 @@ import 'blocnavigation.dart';
 import 'testcolumnlistview.dart';
 import 'testclippath.dart';
 import 'testcustompainter.dart';
+import 'testshowmodal.dart';
 
 void main() {
   // Weather app with observer
@@ -39,7 +40,8 @@ void main() {
   // runApp(ColumnListApp());
   // runApp(ClipPathApp());
   // runApp(CustomPainterApp());
-  runApp(SineWaveApp());
+  // runApp(SineWaveApp());
+  runApp(ShowModalApp());
 
   // runApp(MultiProvider(
   //   providers: [

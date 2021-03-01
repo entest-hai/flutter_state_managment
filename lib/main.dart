@@ -38,7 +38,8 @@ void main() {
   // runApp(BlocNavApp());
   // runApp(ColumnListApp());
   // runApp(ClipPathApp());
-  runApp(CustomPainterApp());
+  // runApp(CustomPainterApp());
+  runApp(SineWaveApp());
 
   // runApp(MultiProvider(
   //   providers: [

@@ -11,12 +11,20 @@ class _LocalTodoState extends State<LocalTodoApp> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return MaterialApp(
-      home: ListTodoView(),
-    );
+        home: MultiBlocProvider(
+      providers: [BlocProvider(create: (context) => TodoCubit()..getTodos())],
+      child: ListTodoView(),
+    ));
   }
 }
 
-class ListTodoView extends StatelessWidget {
+//
+class ListTodoView extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _ListTodoViewState();
+}
+
+class _ListTodoViewState extends State<ListTodoView> {
   final _titleController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -40,43 +48,114 @@ class ListTodoView extends StatelessWidget {
           return CircularProgressIndicator();
         }
       }),
-      floatingActionButton: BlocBuilder<TodoCubit, TodoState>(
-        builder: (context, state) {
-          return FloatingActionButton(
+      floatingActionButton: _floatingActionButton(),
+    );
+  }
+
+  Widget _newTodoView() {
+    return Column(
+      children: [
+        TextField(
+          controller: _titleController,
+          decoration: InputDecoration(hintText: 'Enter todo title'),
+        ),
+        ElevatedButton(
             onPressed: () {
-              showModalBottomSheet(
-                  isScrollControlled: true,
-                  context: context,
-                  builder: (BuildContext context) {
-                    return Container(
-                      height: MediaQuery.of(context).size.height - 100,
-                      color: Colors.white,
-                      child: Column(
-                        children: [
-                          TextField(
-                            controller: _titleController,
-                            decoration:
-                                InputDecoration(hintText: "Enter todo title"),
-                          ),
-                          ElevatedButton(
-                            child: Text("Save Note"),
-                            onPressed: () {
-                              BlocProvider.of<TodoCubit>(context)
-                                  .createTodo(_titleController.text);
-                              _titleController.text = '';
-                              Navigator.pop(context);
-                            },
-                          )
-                        ],
-                      ),
-                    );
-                  });
+              BlocProvider.of<TodoCubit>(context)
+                  .createTodo(_titleController.text);
+              _titleController.text = '';
+              Navigator.of(context).pop();
             },
-            child: Icon(Icons.add),
-          );
-        },
+            child: Text('Save Word'))
+      ],
+    );
+  }
+
+  Widget _floatingActionButton() {
+    return FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          showModalBottomSheet(
+              context: context, builder: (context) => _newTodoView());
+        });
+  }
+}
+
+// _MyState and BlocProvider
+class _TodosAppState extends State<LocalTodoApp> {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return MaterialApp(
+      home: BlocProvider(
+        create: (context) => TodoCubit()..getTodos(),
+        child: TodosView(),
       ),
     );
+  }
+}
+
+// TodoView
+class TodosView extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _TodosViewState();
+}
+
+// _TodoViewState
+class _TodosViewState extends State<TodosView> {
+  final _titleController = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Todo"),
+      ),
+      body: BlocBuilder<TodoCubit, TodoState>(builder: (context, state) {
+        if (state is ListTodoSuccess) {
+          return ListView.builder(
+            itemCount: state.todos.length,
+            itemBuilder: (context, index) {
+              return Card(
+                child: ListTile(
+                  title: Text(state.todos[index].title),
+                ),
+              );
+            },
+          );
+        } else {
+          return CircularProgressIndicator();
+        }
+      }),
+      floatingActionButton: _floatingActionButton(),
+    );
+  }
+
+  Widget _newTodoView() {
+    return Column(
+      children: [
+        TextField(
+          controller: _titleController,
+          decoration: InputDecoration(hintText: 'Enter todo title'),
+        ),
+        ElevatedButton(
+            onPressed: () {
+              BlocProvider.of<TodoCubit>(context)
+                  .createTodo(_titleController.text);
+              _titleController.text = '';
+              Navigator.of(context).pop();
+            },
+            child: Text('Save Todo'))
+      ],
+    );
+  }
+
+  Widget _floatingActionButton() {
+    return FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          showModalBottomSheet(
+              context: context, builder: (context) => _newTodoView());
+        });
   }
 }
 

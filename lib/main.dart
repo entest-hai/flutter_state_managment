@@ -43,14 +43,15 @@ void main() {
   // runApp(CustomPainterApp());
   // runApp(SineWaveApp());
   // runApp(ShowModalApp());
-  runApp(MultiProvider(
-    providers: [
-      BlocProvider<TodoCubit>(
-        create: (context) => TodoCubit()..getTodos(),
-      )
-    ],
-    child: LocalTodoApp(),
-  ));
+  // runApp(MultiProvider(
+  //   providers: [
+  //     BlocProvider<TodoCubit>(
+  //       create: (context) => TodoCubit()..getTodos(),
+  //     )
+  //   ],
+  //   child: LocalTodoApp(),
+  // ));
+  runApp(LocalTodoApp());
 
   // runApp(MultiProvider(
   //   providers: [

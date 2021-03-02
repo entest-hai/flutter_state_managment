@@ -22,6 +22,7 @@ import 'testcolumnlistview.dart';
 import 'testclippath.dart';
 import 'testcustompainter.dart';
 import 'testshowmodal.dart';
+import 'localtodoapp.dart';
 
 void main() {
   // Weather app with observer
@@ -41,7 +42,15 @@ void main() {
   // runApp(ClipPathApp());
   // runApp(CustomPainterApp());
   // runApp(SineWaveApp());
-  runApp(ShowModalApp());
+  // runApp(ShowModalApp());
+  runApp(MultiProvider(
+    providers: [
+      BlocProvider<TodoCubit>(
+        create: (context) => TodoCubit()..getTodos(),
+      )
+    ],
+    child: LocalTodoApp(),
+  ));
 
   // runApp(MultiProvider(
   //   providers: [

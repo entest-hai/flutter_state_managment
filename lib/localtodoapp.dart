@@ -17,10 +17,7 @@ class _LocalTodoState extends State<LocalTodoApp> {
 }
 
 class ListTodoView extends StatelessWidget {
-  const ListTodoView({
-    Key key,
-  }) : super(key: key);
-
+  final _titleController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,11 +53,17 @@ class ListTodoView extends StatelessWidget {
                       color: Colors.white,
                       child: Column(
                         children: [
+                          TextField(
+                            controller: _titleController,
+                            decoration:
+                                InputDecoration(hintText: "Enter todo title"),
+                          ),
                           ElevatedButton(
-                            child: Text("Close Button"),
+                            child: Text("Save Note"),
                             onPressed: () {
                               BlocProvider.of<TodoCubit>(context)
-                                  .createTodo("OK");
+                                  .createTodo(_titleController.text);
+                              _titleController.text = '';
                               Navigator.pop(context);
                             },
                           )

@@ -23,6 +23,7 @@ import 'testclippath.dart';
 import 'testcustompainter.dart';
 import 'testshowmodal.dart';
 import 'localtodoapp.dart';
+import 'testctgapi.dart';
 
 void main() {
   // Weather app with observer
@@ -51,7 +52,8 @@ void main() {
   //   ],
   //   child: LocalTodoApp(),
   // ));
-  runApp(LocalTodoApp());
+  // runApp(LocalTodoApp());
+  runApp(CTGApp());
 
   // runApp(MultiProvider(
   //   providers: [

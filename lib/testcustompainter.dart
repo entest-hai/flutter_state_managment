@@ -260,6 +260,30 @@ class CTGGridPainter extends CustomPainter {
     // Draw rect
     canvas.drawRect(
         Rect.fromLTWH(10, 10, size.width - 20, size.height - 20), borderPaint);
+    // Draw heart rate horizontal line x30bpm square
+    final stickPaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..color = Colors.black.withOpacity(0.5)
+      ..strokeWidth = 0.7;
+    for (var i = 2; i < 8; i++) {
+      var yOffset = heartRateToYAxis(i * 30.0, size.height - 20);
+      canvas.drawLine(
+          Offset(10.0, yOffset), Offset(size.width - 10, yOffset), stickPaint);
+    }
+    // Draw time vertical line x2minute square
+    for (var i = 0; i < 30; i++) {
+      var xOffset = 10.0 + i * (size.width - 20) / 30;
+      canvas.drawLine(
+          Offset(xOffset, 10.0), Offset(xOffset, size.height - 10), stickPaint);
+    }
+    // Draw time vertical line x10minute mark
+    final tenMinutePain = Paint()..color = Colors.black.withOpacity(0.2);
+    for (var i = 0; i < 6; i++) {
+      canvas.drawRect(
+          Rect.fromLTWH(10.0 + i * (size.width - 20) / 6, 10,
+              (size.width - 20) / 60, size.height - 20),
+          tenMinutePain);
+    }
 
     // Maternal heart rate paint
     final mHRPaint = Paint()
@@ -304,7 +328,7 @@ class CTGGridPainter extends CustomPainter {
     final minHR = 30.0;
     final maxHR = 240.0;
     final dy = height / (maxHR - minHR);
-    return (maxHR - heartrate) * dy;
+    return 10.0 + (maxHR - heartrate) * dy;
   }
 
   @override

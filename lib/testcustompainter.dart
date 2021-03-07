@@ -20,7 +20,102 @@ class _CTGAppState extends State<CTGGridApp> {
       home: MultiBlocProvider(providers: [
         BlocProvider(
             create: (context) => HeartRateCubit()..loadHeartRateFromFile())
-      ], child: CTGAppNav()),
+      ], child: CTGAppNavTab()),
+    );
+  }
+}
+
+class CTGAppNavTab extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return _CTGAppNavTabState();
+  }
+}
+
+class _CTGAppNavTabState extends State<CTGAppNavTab> {
+  int _currentIndex = 0;
+  final tabs = [
+    Center(
+      child: CTGAppOnly(),
+    ),
+    Center(
+      child: Text("SQI"),
+    ),
+    Center(
+      child: Text("Profile"),
+    ),
+    Center(
+      child: Text("Setting"),
+    ),
+  ];
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Navigator(
+      pages: [
+        MaterialPage(
+            child: Scaffold(
+          appBar: AppBar(title: Text("Amplify")),
+          bottomNavigationBar: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: Colors.white,
+            currentIndex: _currentIndex,
+            items: [
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.home),
+                  label: "CTG",
+                  backgroundColor: Colors.blue),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.camera),
+                  label: "SQI",
+                  backgroundColor: Colors.blue),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.person),
+                  label: "Profile",
+                  backgroundColor: Colors.blue),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.settings),
+                  label: "Setting",
+                  backgroundColor: Colors.blue)
+            ],
+            onTap: (index) {
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+          ),
+          body: tabs[_currentIndex],
+        ))
+      ],
+      onPopPage: (route, result) {
+        return route.didPop(result);
+      },
+    );
+  }
+}
+
+class CTGAppOnly extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return BlocBuilder<HeartRateCubit, HeartRateState>(
+      builder: (context, state) {
+        if (state is LoadedHeartRateScucess) {
+          return Column(
+            children: [
+              CTGGridView(
+                mHR: state.mHR,
+                fHR: state.fHR,
+              )
+            ],
+          );
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
     );
   }
 }
@@ -256,7 +351,7 @@ class CTGGridPainter extends CustomPainter {
     final borderPaint = Paint()
       ..style = PaintingStyle.stroke
       ..color = Colors.black
-      ..strokeWidth = 1.0;
+      ..strokeWidth = 2.0;
     // Draw rect
     canvas.drawRect(
         Rect.fromLTWH(10, 10, size.width - 20, size.height - 20), borderPaint);

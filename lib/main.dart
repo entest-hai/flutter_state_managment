@@ -43,6 +43,7 @@ void main() {
   // runApp(ClipPathApp());
   // runApp(CustomPainterApp());
   // runApp(SineWaveApp());
+  runApp(CTGGridApp());
   // runApp(ShowModalApp());
   // runApp(MultiProvider(
   //   providers: [
@@ -53,7 +54,7 @@ void main() {
   //   child: LocalTodoApp(),
   // ));
   // runApp(LocalTodoApp());
-  runApp(CTGApp());
+  // runApp(CTGApp());
 
   // runApp(MultiProvider(
   //   providers: [

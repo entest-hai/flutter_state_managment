@@ -1,6 +1,65 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+class CTGGridApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return _CTGAppState();
+  }
+}
+
+class _CTGAppState extends State<CTGGridApp> {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return MaterialApp(
+      home: MultiBlocProvider(providers: [
+        BlocProvider(
+            create: (context) => HeartRateCubit()..loadHeartRateFromFile())
+      ], child: CTGAppNav()),
+    );
+  }
+}
+
+class CTGAppNav extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Navigator(
+      pages: [
+        MaterialPage(
+            child: Scaffold(
+          appBar: AppBar(title: Text("CTG")),
+          body: BlocBuilder<HeartRateCubit, HeartRateState>(
+            builder: (context, state) {
+              if (state is LoadedHeartRateScucess) {
+                return Column(
+                  children: [
+                    CTGGridView(
+                      mHR: state.mHR,
+                      fHR: state.fHR,
+                    )
+                  ],
+                );
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
+          ),
+        ))
+      ],
+      onPopPage: (route, result) {
+        return route.didPop(result);
+      },
+    );
+  }
+}
 
 class SineWaveApp extends StatefulWidget {
   @override
@@ -27,7 +86,7 @@ class _SineWaveState extends State<SineWaveApp> {
               child: Container(
                 height: 300,
               ),
-            )
+            ),
           ],
         ),
         floatingActionButton: FloatingActionButton(
@@ -91,21 +150,6 @@ class CustomPainterApp extends StatelessWidget {
   }
 }
 
-// Size CustomPaint
-// Container(
-//           color: Colors.white,
-//           padding: EdgeInsets.symmetric(horizontal: 40, vertical: 80),
-//           child: LayoutBuilder(
-//               builder: (_, contraints) => Container(
-//                     width: contraints.widthConstraints().maxWidth,
-//                     height: contraints.heightConstraints().maxHeight,
-//                     color: Colors.yellow,
-//                     child: CustomPaint(
-//                       painter: FaceOutlinePainter(),
-//                     ),
-//                   )),
-//         )
-
 class FaceOutlinePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     // TODO: Draw here
@@ -166,4 +210,149 @@ class SineWavePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(SineWavePainter oldDelegate) => false;
+}
+
+// Draw CTG with heart rate array
+class CTGGridView extends StatefulWidget {
+  final List<double> mHR;
+  final List<double> fHR;
+  CTGGridView({this.mHR, this.fHR});
+  @override
+  State<StatefulWidget> createState() {
+    return _CTGGridState(mHR: mHR, fHR: fHR);
+  }
+}
+
+class _CTGGridState extends State<CTGGridView> {
+  final List<double> mHR;
+  final List<double> fHR;
+  _CTGGridState({this.mHR, this.fHR});
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: CustomPaint(
+        painter: CTGGridPainter(mHR: mHR, fHR: fHR),
+        size: Size(MediaQuery.of(context).size.width * 3,
+            MediaQuery.of(context).size.height / 3),
+      ),
+    );
+  }
+}
+
+// CTGGrid
+class CTGGridPainter extends CustomPainter {
+  final List<double> mHR;
+  final List<double> fHR;
+  CTGGridPainter({this.mHR, this.fHR});
+
+  void paint(Canvas canvas, Size size) {
+    // Draw background
+    final backgroundPaint = Paint()..color = Colors.yellow.withOpacity(0.0);
+    // Draw rect
+    canvas.drawRect(Rect.fromLTWH(10, 10, size.width - 20, size.height - 20),
+        backgroundPaint);
+    // Draw border
+    final borderPaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..color = Colors.black
+      ..strokeWidth = 1.0;
+    // Draw rect
+    canvas.drawRect(
+        Rect.fromLTWH(10, 10, size.width - 20, size.height - 20), borderPaint);
+
+    // Maternal heart rate paint
+    final mHRPaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..color = Colors.blue
+      ..strokeWidth = 1.5;
+    // Plot maternal heart rate
+    var numHeartRate = 60 * 60 * 4;
+    var dx = (size.width - 20) / numHeartRate;
+    var dx1 = 0.0;
+    var dx2 = 0.0;
+    var dy1 = 0.0;
+    var dy2 = 0.0;
+    for (var i = 0; i < mHR.length - 1; i++) {
+      dx1 = 10.0 + i * dx;
+      dx2 = 10.0 + (i + 1) * dx;
+      dy1 = heartRateToYAxis(mHR[i], size.height - 20);
+      dy2 = heartRateToYAxis(mHR[i + 1], size.height - 20);
+      canvas.drawLine(Offset(dx1, dy1), Offset(dx2, dy2), mHRPaint);
+    }
+    // Fetal heart rate paint
+    final fHRPaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..color = Colors.red
+      ..strokeWidth = 1.5;
+
+    // Plot maternal heart rate
+    dx1 = 0.0;
+    dx2 = 0.0;
+    dy1 = 0.0;
+    dy2 = 0.0;
+    for (var i = 0; i < fHR.length - 1; i++) {
+      dx1 = 10.0 + i * dx;
+      dx2 = 10.0 + (i + 1) * dx;
+      dy1 = heartRateToYAxis(fHR[i], size.height - 20);
+      dy2 = heartRateToYAxis(fHR[i + 1], size.height - 20);
+      canvas.drawLine(Offset(dx1, dy1), Offset(dx2, dy2), fHRPaint);
+    }
+  }
+
+  double heartRateToYAxis(double heartrate, double height) {
+    final minHR = 30.0;
+    final maxHR = 240.0;
+    final dy = height / (maxHR - minHR);
+    return (maxHR - heartrate) * dy;
+  }
+
+  @override
+  bool shouldRepaint(CTGGridPainter oldDelegate) => false;
+}
+
+// HeartRate Repository
+class HeartRateRepository {
+  Future<List<double>> readHeartRateFile(String path) async {
+    List<double> heartrates = [];
+    try {
+      final content = await rootBundle.loadString(path);
+      final nums = content.split("\n").toList();
+      for (var value in nums) {
+        try {
+          heartrates.add(double.parse(value));
+        } catch (e) {
+          heartrates.add(0.0);
+        }
+      }
+      return heartrates;
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+}
+
+// HeartRateCubit
+abstract class HeartRateState {}
+
+class LoadingHeartRate extends HeartRateState {}
+
+class LoadedHeartRateScucess extends HeartRateState {
+  final List<double> mHR;
+  final List<double> fHR;
+  LoadedHeartRateScucess({this.mHR, this.fHR});
+}
+
+class HeartRateCubit extends Cubit<HeartRateState> {
+  final _heartrateRepository = HeartRateRepository();
+  HeartRateCubit() : super(LoadingHeartRate());
+
+  Future<void> loadHeartRateFromFile() async {
+    final mHR =
+        await _heartrateRepository.readHeartRateFile("assets/mheartrate.txt");
+    final fHR =
+        await _heartrateRepository.readHeartRateFile("assets/fheartrate.txt");
+    emit(LoadedHeartRateScucess(mHR: mHR, fHR: fHR));
+  }
 }

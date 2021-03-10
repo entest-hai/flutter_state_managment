@@ -24,6 +24,7 @@ import 'testcustompainter.dart';
 import 'testshowmodal.dart';
 import 'localtodoapp.dart';
 import 'testctgapi.dart';
+import 'testnavigator.dart';
 
 void main() {
   // Weather app with observer
@@ -43,7 +44,8 @@ void main() {
   // runApp(ClipPathApp());
   // runApp(CustomPainterApp());
   // runApp(SineWaveApp());
-  runApp(CTGGridApp());
+  // runApp(CTGGridApp());
+  runApp(SimpleNavigatorApp());
   // runApp(ShowModalApp());
   // runApp(MultiProvider(
   //   providers: [

@@ -55,7 +55,7 @@ class _CTGAppNavTabState extends State<CTGAppNavTab> {
     return Navigator(
       pages: [
         MaterialPage(
-            child: Scaffold(
+          child: Scaffold(
           appBar: AppBar(title: Text("Amplify")),
           bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,

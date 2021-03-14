@@ -25,6 +25,7 @@ import 'testshowmodal.dart';
 import 'localtodoapp.dart';
 import 'testctgapi.dart';
 import 'testnavigator.dart';
+import 'testlistviewscrollfetch.dart';
 
 void main() {
   // Weather app with observer
@@ -36,6 +37,7 @@ void main() {
   // runApp(ListSwipe());
   // runApp(GestureDemoApp());
   // runApp(InfiniteListApp());
+  runApp(ListViewScrollFetchApp());
   // runApp(PokedexApp());
   // runApp(TestCarouselSliderApp());
   // runApp(TestNetworkRequestApp());
@@ -45,7 +47,7 @@ void main() {
   // runApp(CustomPainterApp());
   // runApp(SineWaveApp());
   // runApp(CTGGridApp());
-  runApp(SimpleNavigatorApp());
+  // runApp(SimpleNavigatorApp());
   // runApp(ShowModalApp());
   // runApp(MultiProvider(
   //   providers: [

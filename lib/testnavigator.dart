@@ -29,6 +29,8 @@ class _SimpleNavigatorAppState extends State<SimpleNavigatorApp> {
                 key: UserDetailsView.valueKey)
         ],
         onPopPage: (route, result) {
+          print("on pop page function");
+
           final page = route.settings as MaterialPage;
           if (page.key == UserDetailsView.valueKey) {
             _selectedUser = null;

@@ -55,7 +55,7 @@ class _CTGAppNavTabState extends State<CTGAppNavTab> {
     return Navigator(
       pages: [
         MaterialPage(
-          child: Scaffold(
+            child: Scaffold(
           appBar: AppBar(title: Text("Amplify")),
           bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
@@ -328,7 +328,7 @@ class _CTGGridState extends State<CTGGridView> {
       scrollDirection: Axis.horizontal,
       child: CustomPaint(
         painter: CTGGridPainter(mHR: mHR, fHR: fHR),
-        size: Size(MediaQuery.of(context).size.width * 3,
+        size: Size(MediaQuery.of(context).size.width * 6,
             MediaQuery.of(context).size.height / 3),
       ),
     );
@@ -337,6 +337,7 @@ class _CTGGridState extends State<CTGGridView> {
 
 // CTGGrid
 class CTGGridPainter extends CustomPainter {
+  final numMinuteLine = 60;
   final List<double> mHR;
   final List<double> fHR;
   CTGGridPainter({this.mHR, this.fHR});
@@ -366,8 +367,8 @@ class CTGGridPainter extends CustomPainter {
           Offset(10.0, yOffset), Offset(size.width - 10, yOffset), stickPaint);
     }
     // Draw time vertical line x2minute square
-    for (var i = 0; i < 30; i++) {
-      var xOffset = 10.0 + i * (size.width - 20) / 30;
+    for (var i = 0; i < numMinuteLine; i++) {
+      var xOffset = 10.0 + i * (size.width - 20) / numMinuteLine;
       canvas.drawLine(
           Offset(xOffset, 10.0), Offset(xOffset, size.height - 10), stickPaint);
     }
@@ -397,7 +398,9 @@ class CTGGridPainter extends CustomPainter {
       dx2 = 10.0 + (i + 1) * dx;
       dy1 = heartRateToYAxis(mHR[i], size.height - 20);
       dy2 = heartRateToYAxis(mHR[i + 1], size.height - 20);
-      canvas.drawLine(Offset(dx1, dy1), Offset(dx2, dy2), mHRPaint);
+      if ((mHR[i] > 0) & (mHR[i + 1] > 0)) {
+        canvas.drawLine(Offset(dx1, dy1), Offset(dx2, dy2), mHRPaint);
+      }
     }
     // Fetal heart rate paint
     final fHRPaint = Paint()
@@ -415,7 +418,9 @@ class CTGGridPainter extends CustomPainter {
       dx2 = 10.0 + (i + 1) * dx;
       dy1 = heartRateToYAxis(fHR[i], size.height - 20);
       dy2 = heartRateToYAxis(fHR[i + 1], size.height - 20);
-      canvas.drawLine(Offset(dx1, dy1), Offset(dx2, dy2), fHRPaint);
+      if ((fHR[i] > 0) & (fHR[i + 1] > 0)) {
+        canvas.drawLine(Offset(dx1, dy1), Offset(dx2, dy2), fHRPaint);
+      }
     }
   }
 

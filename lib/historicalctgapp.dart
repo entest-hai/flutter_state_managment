@@ -1,7 +1,6 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'testcustompainter.dart';
 
 class HistoricalCTGApp extends StatelessWidget {
   @override
@@ -10,7 +9,9 @@ class HistoricalCTGApp extends StatelessWidget {
       home: MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => RecordCubit()..fetchRecord("123")),
-          BlocProvider(create: (context) => PatientCTGCubit())
+          BlocProvider(create: (context) => PatientCTGCubit()),
+          BlocProvider(
+              create: (context) => HeartRateCubit()..loadHeartRateFromFile())
         ],
         child: HistoricalCTGView(),
       ),
@@ -27,6 +28,8 @@ class HistoricalCTGView extends StatefulWidget {
 
 class _HistoricalCTGState extends State<HistoricalCTGView> {
   var _selectedCard;
+  double _sliderValue = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +42,7 @@ class _HistoricalCTGState extends State<HistoricalCTGView> {
               children: [
                 Container(
                   height: 50,
-                  color: Colors.grey.withOpacity(0.2),
+                  color: Colors.grey.withOpacity(0.0),
                   child: BlocBuilder<RecordCubit, RecordState>(
                     builder: (context, state) {
                       if (state is LoadingRecord) {
@@ -54,8 +57,13 @@ class _HistoricalCTGState extends State<HistoricalCTGView> {
                             return GestureDetector(
                               onTap: () {
                                 print("tap card $index");
-                                BlocProvider.of<PatientCTGCubit>(context)
-                                    .fetchCTG("$index");
+
+                                // BlocProvider.of<PatientCTGCubit>(context)
+                                //     .fetchCTG("$index");
+
+                                BlocProvider.of<HeartRateCubit>(context)
+                                    .loadHeartRateFromFile();
+
                                 setState(() {
                                   _selectedCard = index;
                                 });
@@ -69,7 +77,7 @@ class _HistoricalCTGState extends State<HistoricalCTGView> {
                                   ),
                                 ),
                                 color: index == _selectedCard
-                                    ? Colors.grey
+                                    ? Colors.blue.withOpacity(0.5)
                                     : Colors.white,
                               ),
                             );
@@ -83,25 +91,68 @@ class _HistoricalCTGState extends State<HistoricalCTGView> {
                     },
                   ),
                 ),
-                Container(
-                    height: 400,
-                    color: Colors.green.withOpacity(0.5),
-                    child: BlocBuilder<PatientCTGCubit, PatientCTGState>(
-                      builder: (context, state) {
-                        if (state is LoadingPatientCTG) {
-                          return Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        } else if (state is LoadedPatientCTGSuccess) {
-                          return Image(
-                              image: AssetImage(
-                                  "assets/whale_" + state.ctg.id + ".jpg"));
-                        }
-                        return Center(
-                          child: Text("Exception"),
-                        );
-                      },
-                    )),
+                BlocBuilder<HeartRateCubit, HeartRateState>(
+                    builder: (context, state) {
+                  if (state is LoadingHeartRate) {
+                    return Container(
+                      height: MediaQuery.of(context).size.height / 3,
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  } else if (state is LoadedHeartRateScucess) {
+                    return Center(
+                      child: CTGGridView(
+                        mHR: state.mHR,
+                        fHR: state.fHR,
+                      ),
+                    );
+                  }
+                  return Center(
+                    child: Text("Exception"),
+                  );
+                }),
+
+                // Container(
+                //     height: 400,
+                //     color: Colors.green.withOpacity(0.5),
+                //     child: BlocBuilder<PatientCTGCubit, PatientCTGState>(
+                //       builder: (context, state) {
+                //         if (state is LoadingPatientCTG) {
+                //           return Center(
+                //             child: CircularProgressIndicator(),
+                //           );
+                //         } else if (state is LoadedPatientCTGSuccess) {
+                //           return Image(
+                //               image: AssetImage(
+                //                   "assets/whale_" + state.ctg.id + ".jpg"));
+                //         }
+                //         return Center(
+                //           child: Text("Exception"),
+                //         );
+                //       },
+                //     )
+                //     ),
+                Stack(
+                  children: [
+                    Container(
+                      height: 50,
+                      color: Colors.grey.withOpacity(0.5),
+                    ),
+                    Slider(
+                        value: _sliderValue,
+                        min: 0,
+                        max: 60,
+                        divisions: 60,
+                        onChanged: (double value) {
+                          print("slider value: $value");
+                          setState(() {
+                            _sliderValue = value;
+                          });
+                        })
+                  ],
+                ),
+
                 Expanded(
                     child: Container(
                   color: Colors.grey.withOpacity(0.0),
@@ -250,14 +301,3 @@ class PatientCTGCubit extends Cubit<PatientCTGState> {
     });
   }
 }
-
-
-// _selectedCard == null
-//                       ? Center(
-//                           child: Text("null"),
-//                         )
-//                       : Image(
-//                           fit: BoxFit.cover,
-//                           image: AssetImage(
-//                               "assets/whale_" + "$_selectedCard" + ".jpg"),
-//                         ),

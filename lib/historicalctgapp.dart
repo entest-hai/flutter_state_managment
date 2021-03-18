@@ -104,11 +104,54 @@ class _HistoricalCTGState extends State<HistoricalCTGView> {
                     )),
                 Expanded(
                     child: Container(
-                  color: Colors.grey.withOpacity(0.5),
-                  child: Center(
-                    child: Text("CTG Statistic $_selectedCard"),
+                  color: Colors.grey.withOpacity(0.0),
+                  child: ListView.separated(
+                    itemCount: 10,
+                    separatorBuilder: (context, index) => SizedBox(height: 0),
+                    itemBuilder: (context, index) {
+                      return Card(
+                        elevation: 0,
+                        child: Padding(
+                            padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                            child: index == 0
+                                ? Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Time",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(
+                                        "Duration",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text(
+                                        "Time",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Text("    ")
+                                    ],
+                                  )
+                                : Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                        Text("2:00PM"),
+                                        Text("1.30 minute"),
+                                        Text("6:00 minute"),
+                                        Icon(
+                                          Icons.circle,
+                                          color: Colors.blue,
+                                        ),
+                                      ])),
+                      );
+                    },
                   ),
-                ))
+                )),
               ],
             );
           },

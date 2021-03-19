@@ -112,27 +112,6 @@ class _HistoricalCTGState extends State<HistoricalCTGView> {
                     child: Text("Exception"),
                   );
                 }),
-
-                // Container(
-                //     height: 400,
-                //     color: Colors.green.withOpacity(0.5),
-                //     child: BlocBuilder<PatientCTGCubit, PatientCTGState>(
-                //       builder: (context, state) {
-                //         if (state is LoadingPatientCTG) {
-                //           return Center(
-                //             child: CircularProgressIndicator(),
-                //           );
-                //         } else if (state is LoadedPatientCTGSuccess) {
-                //           return Image(
-                //               image: AssetImage(
-                //                   "assets/whale_" + state.ctg.id + ".jpg"));
-                //         }
-                //         return Center(
-                //           child: Text("Exception"),
-                //         );
-                //       },
-                //     )
-                //     ),
                 Stack(
                   children: [
                     Container(
@@ -152,7 +131,6 @@ class _HistoricalCTGState extends State<HistoricalCTGView> {
                         })
                   ],
                 ),
-
                 Expanded(
                     child: Container(
                   color: Colors.grey.withOpacity(0.0),

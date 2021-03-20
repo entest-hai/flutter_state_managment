@@ -40,8 +40,8 @@ void main() {
   // runApp(GestureDemoApp());
   // runApp(InfiniteListApp());
   // runApp(ListViewScrollFetchApp());
-  // runApp(HistoricalCTGApp());
-  runApp(CustomSliderApp());
+  runApp(HistoricalCTGApp());
+  // runApp(CustomSliderApp());
   // runApp(PokedexApp());
   // runApp(TestCarouselSliderApp());
   // runApp(TestNetworkRequestApp());

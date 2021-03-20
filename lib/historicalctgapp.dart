@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'testcustompainter.dart';
+import 'customsliderapp.dart';
 
 class HistoricalCTGApp extends StatelessWidget {
   @override
@@ -101,36 +102,43 @@ class _HistoricalCTGState extends State<HistoricalCTGView> {
                       ),
                     );
                   } else if (state is LoadedHeartRateScucess) {
-                    return Center(
-                      child: CTGGridView(
-                        mHR: state.mHR,
-                        fHR: state.fHR,
-                      ),
+                    return CustomSliderView(
+                      onChanged: (value) {
+                        print("on change $value");
+                      },
+                      acels: macels,
+                      decels: mdecels,
                     );
+                    // return Center(
+                    //   child: CTGGridView(
+                    //     mHR: state.mHR,
+                    //     fHR: state.fHR,
+                    //   ),
+                    // );
                   }
                   return Center(
                     child: Text("Exception"),
                   );
                 }),
-                Stack(
-                  children: [
-                    Container(
-                      height: 50,
-                      color: Colors.grey.withOpacity(0.5),
-                    ),
-                    Slider(
-                        value: _sliderValue,
-                        min: 0,
-                        max: 60,
-                        divisions: 60,
-                        onChanged: (double value) {
-                          print("slider value: $value");
-                          setState(() {
-                            _sliderValue = value;
-                          });
-                        })
-                  ],
-                ),
+                // Stack(
+                //   children: [
+                //     Container(
+                //       height: 50,
+                //       color: Colors.grey.withOpacity(0.5),
+                //     ),
+                //     Slider(
+                //         value: _sliderValue,
+                //         min: 0,
+                //         max: 60,
+                //         divisions: 60,
+                //         onChanged: (double value) {
+                //           print("slider value: $value");
+                //           setState(() {
+                //             _sliderValue = value;
+                //           });
+                //         })
+                //   ],
+                // ),
                 Expanded(
                     child: Container(
                   color: Colors.grey.withOpacity(0.0),

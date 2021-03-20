@@ -196,7 +196,8 @@ class _CustomSliderState extends State<CustomSliderView> {
     RenderBox box = context.findRenderObject();
     Offset offset = box.globalToLocal(update.globalPosition);
     _updateDragPosition(offset);
-    _handleChanged(_dragPercentage, MediaQuery.of(context).size.width * 6.0);
+    _handleChanged(
+        _dragPercentage, MediaQuery.of(context).size.width * 6.0 - 20.0);
   }
 
   void _onDragEnd(BuildContext context, DragEndDetails end) {
@@ -256,7 +257,7 @@ class SliderPainter extends CustomPainter {
   }
 
   _paintBlock(Canvas canvas, Size size) {
-    Rect sliderRect = Offset(sliderPosition - width / 2, size.height - margin) &
+    Rect sliderRect = Offset(sliderPosition - width / 4, size.height - margin) &
         Size(width, height);
     canvas.drawRect(sliderRect, wavePainter);
   }

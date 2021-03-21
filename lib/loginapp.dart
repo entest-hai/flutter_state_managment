@@ -17,7 +17,6 @@ class LoginAppBloc extends StatelessWidget {
 }
 
 // AppNavigator
-
 class AppNavigator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -73,6 +72,7 @@ class AuthNavigator extends StatelessWidget {
   }
 }
 
+// Loading View
 class LoadingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -84,6 +84,7 @@ class LoadingView extends StatelessWidget {
   }
 }
 
+// Session View
 class SessionView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -104,6 +105,7 @@ class SessionView extends StatelessWidget {
   }
 }
 
+// Login View and LoginBloc and AuthRepository and context.read<AuthCubit>.showSignUp()
 class LoginView extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
@@ -212,7 +214,6 @@ class LoginView extends StatelessWidget {
 // Confirmation View
 class ConfirmationView extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -288,10 +289,9 @@ class ConfirmationView extends StatelessWidget {
   }
 }
 
-// Sign Up View
+// SignUpView and SignUpBloc and AuthRepository and AuthCubit
 class SignUpView extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -414,7 +414,7 @@ class SignUpView extends StatelessWidget {
   }
 }
 
-// Login Event
+// Login Event {userChange, passwordChange, Submitted}
 abstract class LoginEvent {}
 
 class LoginUsernameChanged extends LoginEvent {
@@ -429,7 +429,7 @@ class LoginPasswordChanged extends LoginEvent {
 
 class LoginSubmitted extends LoginEvent {}
 
-// Login State
+// Login State with data {username, password, formStatus}
 class LoginState {
   final String username;
   bool get isValidUsername => username.length > 3;
@@ -513,7 +513,7 @@ class AuthRepository {
   }
 }
 
-// Login Bloc
+// Login Bloc map event to state
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final AuthRepository authRepo;
   final AuthCubit authCubit;
@@ -775,8 +775,6 @@ class AuthCubit extends Cubit<AuthState> {
       sessionCubit.showSession(credentials);
 }
 
-// Confirmation View
-
 // Session Cubit
 class SessionCubit extends Cubit<SessionState> {
   final AuthRepository authRepo;
@@ -797,6 +795,7 @@ class SessionCubit extends Cubit<SessionState> {
   }
 
   void showAuth() => emit(Unauthenticated());
+
   void showSession(AuthCredentials credentials) {
     // final user = dataRepo.getUser(credentials.userId);
     final user = credentials.username;
@@ -808,8 +807,6 @@ class SessionCubit extends Cubit<SessionState> {
     emit(Unauthenticated());
   }
 }
-
-// Session Event
 
 // Session State
 abstract class SessionState {}

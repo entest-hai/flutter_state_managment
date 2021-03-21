@@ -29,6 +29,7 @@ import 'testlistviewscrollfetch.dart';
 import 'historicalctgapp.dart';
 import 'customsliderapp.dart';
 import 'loginapp.dart';
+import 'simpleloginapp.dart';
 
 void main() {
   // Weather app with observer
@@ -42,7 +43,8 @@ void main() {
   // runApp(InfiniteListApp());
   // runApp(ListViewScrollFetchApp());
   // runApp(HistoricalCTGApp());
-  runApp(LoginAppBloc());
+  // runApp(LoginAppBloc());
+  runApp(SimpleLoginApp());
 
   // runApp(CustomSliderApp());
   // runApp(PokedexApp());

@@ -201,7 +201,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         await authRepo.login();
         yield state.copyWidth(formStatus: SubmissionSuccess());
       } catch (e) {
-        yield state.copyWidth(formStatus: SubmissionFailed());
+        yield state.copyWidth(formStatus: SubmissionFailed(exception: e));
       }
     }
   }

@@ -14,7 +14,87 @@ class HistoricalCTGApp extends StatelessWidget {
           BlocProvider(
               create: (context) => HeartRateCubit()..loadHeartRateFromFile())
         ],
-        child: HistoricalCTGView(),
+        child: HistoricalCTGNavigator(),
+      ),
+    );
+  }
+}
+
+// Historical Navigator
+class HistoricalCTGNavigator extends StatelessWidget {
+  final showMultipleCTG = true;
+  @override
+  Widget build(BuildContext context) {
+    return Navigator(
+      pages: [
+        // Home
+        // MaterialPage(child: HomeScreenView()),
+
+        // Show multiple CTG
+        if (showMultipleCTG) MaterialPage(child: MultipleCTGView()),
+
+        // Show one CTG
+        if (!showMultipleCTG) MaterialPage(child: HistoricalCTGView())
+      ],
+      onPopPage: (route, result) => route.didPop(result),
+    );
+  }
+}
+
+// Homescreen
+class HomeScreenView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Home"),
+      ),
+    );
+  }
+}
+
+// Display Multiple CTG Per Screen
+class MultipleCTGView extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _MultipleCTGState();
+  }
+}
+
+class _MultipleCTGState extends State<MultipleCTGView> {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Multiple CTG"),
+        ),
+        body: ListView.builder(
+            itemCount: 3,
+            itemBuilder: (context, index) {
+              return BlocBuilder<HeartRateCubit, HeartRateState>(
+                  builder: (context, state) {
+                if (state is LoadingHeartRate) {
+                  return Container(
+                    height: MediaQuery.of(context).size.height / 3,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                } else if (state is LoadedHeartRateScucess) {
+                  return CustomSliderView(
+                    onChanged: (value) {
+                      print("on change $value");
+                    },
+                    acels: macels,
+                    decels: mdecels,
+                  );
+                }
+                return Center(
+                  child: Text("Exception"),
+                );
+              });
+            }),
       ),
     );
   }
@@ -39,7 +119,8 @@ class _HistoricalCTGState extends State<HistoricalCTGView> {
         ),
         body: BlocBuilder<RecordCubit, RecordState>(
           builder: (context, state) {
-            return Column(
+            return SafeArea(
+                child: Column(
               children: [
                 Container(
                   height: 50,
@@ -190,7 +271,7 @@ class _HistoricalCTGState extends State<HistoricalCTGView> {
                   ),
                 )),
               ],
-            );
+            ));
           },
         ));
   }

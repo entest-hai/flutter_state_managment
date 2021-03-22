@@ -42,9 +42,9 @@ void main() {
   // runApp(GestureDemoApp());
   // runApp(InfiniteListApp());
   // runApp(ListViewScrollFetchApp());
-  // runApp(HistoricalCTGApp());
+  runApp(HistoricalCTGApp());
   // runApp(LoginAppBloc());
-  runApp(SimpleLoginApp());
+  // runApp(SimpleLoginApp());
 
   // runApp(CustomSliderApp());
   // runApp(PokedexApp());

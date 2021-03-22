@@ -9,6 +9,7 @@ class HistoricalCTGApp extends StatelessWidget {
     return MaterialApp(
       home: MultiBlocProvider(
         providers: [
+          BlocProvider(create: (context) => HistoricalCTGNavCubit()),
           BlocProvider(create: (context) => RecordCubit()..fetchRecord("123")),
           BlocProvider(create: (context) => PatientCTGCubit()),
           BlocProvider(
@@ -22,22 +23,24 @@ class HistoricalCTGApp extends StatelessWidget {
 
 // Historical Navigator
 class HistoricalCTGNavigator extends StatelessWidget {
-  final showMultipleCTG = true;
   @override
   Widget build(BuildContext context) {
-    return Navigator(
-      pages: [
-        // Home
-        // MaterialPage(child: HomeScreenView()),
+    return BlocBuilder<HistoricalCTGNavCubit, HistoricalCTGNavState>(
+        builder: (context, state) {
+      return Navigator(
+        pages: [
+          // Home
+          MaterialPage(child: HistoricalCTGView()),
 
-        // Show multiple CTG
-        if (showMultipleCTG) MaterialPage(child: MultipleCTGView()),
-
-        // Show one CTG
-        if (!showMultipleCTG) MaterialPage(child: HistoricalCTGView())
-      ],
-      onPopPage: (route, result) => route.didPop(result),
-    );
+          // Show multiple CTG
+          if (state is ShowMultipleCTG) MaterialPage(child: MultipleCTGView()),
+        ],
+        onPopPage: (route, result) {
+          BlocProvider.of<HistoricalCTGNavCubit>(context).showOneCTG();
+          return route.didPop(result);
+        },
+      );
+    });
   }
 }
 
@@ -69,32 +72,33 @@ class _MultipleCTGState extends State<MultipleCTGView> {
         appBar: AppBar(
           title: Text("Multiple CTG"),
         ),
-        body: ListView.builder(
-            itemCount: 3,
-            itemBuilder: (context, index) {
-              return BlocBuilder<HeartRateCubit, HeartRateState>(
-                  builder: (context, state) {
-                if (state is LoadingHeartRate) {
-                  return Container(
-                    height: MediaQuery.of(context).size.height / 3,
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  );
-                } else if (state is LoadedHeartRateScucess) {
-                  return CustomSliderView(
-                    onChanged: (value) {
-                      print("on change $value");
-                    },
-                    acels: macels,
-                    decels: mdecels,
-                  );
-                }
-                return Center(
-                  child: Text("Exception"),
-                );
-              });
-            }),
+        body: SafeArea(
+            child: ListView.builder(
+                itemCount: 3,
+                itemBuilder: (context, index) {
+                  return BlocBuilder<HeartRateCubit, HeartRateState>(
+                      builder: (context, state) {
+                    if (state is LoadingHeartRate) {
+                      return Container(
+                        height: MediaQuery.of(context).size.height / 3,
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    } else if (state is LoadedHeartRateScucess) {
+                      return CustomSliderView(
+                        onChanged: (value) {
+                          print("on change $value");
+                        },
+                        acels: macels,
+                        decels: mdecels,
+                      );
+                    }
+                    return Center(
+                      child: Text("Exception"),
+                    );
+                  });
+                })),
       ),
     );
   }
@@ -116,6 +120,14 @@ class _HistoricalCTGState extends State<HistoricalCTGView> {
     return Scaffold(
         appBar: AppBar(
           title: Text("Historical CTG"),
+          actions: [
+            IconButton(
+                icon: Icon(Icons.chevron_right),
+                onPressed: () {
+                  BlocProvider.of<HistoricalCTGNavCubit>(context)
+                      .showMultipleCTG();
+                })
+          ],
         ),
         body: BlocBuilder<RecordCubit, RecordState>(
           builder: (context, state) {
@@ -366,5 +378,25 @@ class PatientCTGCubit extends Cubit<PatientCTGState> {
       emit(LoadedPatientCTGSuccess(ctg: ctg));
       print("responsed ctg from db");
     });
+  }
+}
+
+// HistoricalCTGNavState
+abstract class HistoricalCTGNavState {}
+
+class ShowOneCTG extends HistoricalCTGNavState {}
+
+class ShowMultipleCTG extends HistoricalCTGNavState {}
+
+// HistoricalCTGNavCubit
+class HistoricalCTGNavCubit extends Cubit<HistoricalCTGNavState> {
+  HistoricalCTGNavCubit() : super(ShowOneCTG());
+
+  void showMultipleCTG() {
+    emit(ShowMultipleCTG());
+  }
+
+  void showOneCTG() {
+    emit(ShowOneCTG());
   }
 }

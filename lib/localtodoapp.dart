@@ -9,7 +9,6 @@ class LocalTodoApp extends StatefulWidget {
 class _LocalTodoState extends State<LocalTodoApp> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return MaterialApp(
         home: MultiBlocProvider(
       providers: [BlocProvider(create: (context) => TodoCubit()..getTodos())],
@@ -17,6 +16,8 @@ class _LocalTodoState extends State<LocalTodoApp> {
     ));
   }
 }
+
+
 
 //
 class ListTodoView extends StatefulWidget {
@@ -192,8 +193,8 @@ class TodoCubit extends Cubit<TodoState> {
   TodoCubit() : super(LoadingTodos());
 
   void getTodos() async {
-    _todoRepo.todos.add(Todo(title: "First Task"));
-    print("get todos");
+    // _todoRepo.todos.add(Todo(title: "First Task"));
+    // print("get todos");
     emit(ListTodoSuccess(todos: _todoRepo.todos));
   }
 

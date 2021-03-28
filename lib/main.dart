@@ -30,6 +30,8 @@ import 'historicalctgapp.dart';
 import 'customsliderapp.dart';
 import 'loginapp.dart';
 import 'simpleloginapp.dart';
+import 'user_profile.dart';
+import 'todoappbloc.dart';
 
 void main() {
   // Weather app with observer
@@ -42,9 +44,10 @@ void main() {
   // runApp(GestureDemoApp());
   // runApp(InfiniteListApp());
   // runApp(ListViewScrollFetchApp());
-  runApp(HistoricalCTGApp());
+  // runApp(HistoricalCTGApp());
   // runApp(LoginAppBloc());
   // runApp(SimpleLoginApp());
+  // runApp(UserProfileApp());
 
   // runApp(CustomSliderApp());
   // runApp(PokedexApp());
@@ -58,6 +61,9 @@ void main() {
   // runApp(CTGGridApp());
   // runApp(SimpleNavigatorApp());
   // runApp(ShowModalApp());
+  runApp(TodoBlocApp());
+
+
   // runApp(MultiProvider(
   //   providers: [
   //     BlocProvider<TodoCubit>(

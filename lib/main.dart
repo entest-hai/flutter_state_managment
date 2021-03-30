@@ -47,7 +47,7 @@ void main() {
   // runApp(HistoricalCTGApp());
   // runApp(LoginAppBloc());
   // runApp(SimpleLoginApp());
-  // runApp(UserProfileApp());
+  runApp(UserProfileApp());
 
   // runApp(CustomSliderApp());
   // runApp(PokedexApp());
@@ -61,7 +61,7 @@ void main() {
   // runApp(CTGGridApp());
   // runApp(SimpleNavigatorApp());
   // runApp(ShowModalApp());
-  runApp(TodoBlocApp());
+  // runApp(TodoBlocApp());
 
 
   // runApp(MultiProvider(

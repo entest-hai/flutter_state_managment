@@ -69,17 +69,187 @@ class HomeScreen extends StatelessWidget {
           )
         ],
       ),
-      body: ListView(
-        padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 120.0),
+      body: Stack(
+        alignment: Alignment.center,
         children: [
-          UpCommingRoom(
-            upcommingRooms: upcomingRoomsList,
-          )
+          ListView(
+          padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 120.0),
+          children: [
+            UpCommingRoom(
+              upcommingRooms: upcomingRoomsList,
+            ),
+
+            const SizedBox(height: 12.0,),
+
+            ...roomsList.map((e) => RoomCard(room: e,))
+          ],
+        ),
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: 0,
+          child: Container(
+            height: 100.0,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Theme.of(context).scaffoldBackgroundColor.withOpacity(0.1),
+                  Theme.of(context).scaffoldBackgroundColor,
+                ]
+              )
+            ),
+          ),
+        ),
+        Positioned(
+          bottom: 60.0,
+          child: Container(
+            padding: const EdgeInsets.all(12.0),
+            decoration: BoxDecoration(
+              color: Theme.of(context).accentColor,
+              borderRadius: BorderRadius.circular(24.0),
+            ),
+            child: const Text.rich(
+              TextSpan(
+                children: [
+                  WidgetSpan(
+                    child: Icon(
+                      CupertinoIcons.add,
+                      size: 21.0,
+                      color: Colors.white,
+                    )
+                  ),
+                  TextSpan(
+                    text: 'Start a room',
+                    style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w500)
+                  )
+                ]
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          bottom: 60.0,
+          right: 40.0,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              IconButton(icon: const Icon(CupertinoIcons.circle_grid_3x3_fill, size: 28.0,), onPressed: (){
+
+              }
+              ),
+              Positioned(
+                right: 4.6,
+                bottom: 11.8,
+                child: Container(
+                  height: 16.0,
+                  width: 16.0,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Theme.of(context).accentColor,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        )
         ],
       ),
     );
   }
 }
+
+
+// Room card 
+class RoomCard extends StatelessWidget {
+  final Room room;
+  const RoomCard({Key key, this.room}) : super(key: key); 
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '${room.club} 🏠'.toUpperCase(),
+                style: Theme.of(context).textTheme.overline.copyWith(
+                  fontSize: 12.0,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 1.0
+                ),
+                overflow: TextOverflow.ellipsis,
+              ),
+              Text(room.name, style: Theme.of(context).textTheme.bodyText1.copyWith(
+                fontSize: 15.0,
+                fontWeight: FontWeight.bold
+              ),
+              ),
+              const SizedBox(height: 12.0,),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Container(
+                      height: 100.0,
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            left: 28.0,
+                            top: 20.0,
+                            child: UserProfileImage(imageUrl: room.speakers[1].imageUrl, size: 48.0,),
+                          ),
+                          UserProfileImage(
+                            imageUrl: room.speakers[0].imageUrl,
+                            size: 48.0,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  Expanded(flex: 2,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ...room.speakers.map((e) => Text('${e.givenName} ${e.familyName}', style: Theme.of(context).textTheme.bodyText1.copyWith(
+                        fontSize: 16.0),
+                      ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 4.0),
+                        child: Text.rich(TextSpan(children: [
+                          TextSpan(text: '${room.speakers.length + room.followedBySpeakers.length + room.others.length}'),
+                          const WidgetSpan(child: Icon(CupertinoIcons.person_fill, size: 18.0, color: Colors.grey,
+                          )
+                          ),
+                          TextSpan(text: '${room.speakers.length}'),
+                          const WidgetSpan(child:Icon(CupertinoIcons.chat_bubble_fill, size: 18, color: Colors.grey,))
+
+                        ]
+                        ),
+                        style: TextStyle(color: Colors.grey[600]),
+
+                        ),
+                      )
+                    ],
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 
 // UpcommingRom
 class UpCommingRoom extends StatelessWidget {

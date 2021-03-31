@@ -32,6 +32,7 @@ import 'loginapp.dart';
 import 'simpleloginapp.dart';
 import 'user_profile.dart';
 import 'todoappbloc.dart';
+import 'clubhouse_app.dart';
 
 void main() {
   // Weather app with observer
@@ -47,7 +48,8 @@ void main() {
   // runApp(HistoricalCTGApp());
   // runApp(LoginAppBloc());
   // runApp(SimpleLoginApp());
-  runApp(UserProfileApp());
+  // runApp(UserProfileApp());
+  runApp(ClubHouseApp());
 
   // runApp(CustomSliderApp());
   // runApp(PokedexApp());
@@ -62,7 +64,6 @@ void main() {
   // runApp(SimpleNavigatorApp());
   // runApp(ShowModalApp());
   // runApp(TodoBlocApp());
-
 
   // runApp(MultiProvider(
   //   providers: [

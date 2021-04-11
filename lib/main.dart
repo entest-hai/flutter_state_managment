@@ -35,6 +35,8 @@ import 'todoappbloc.dart';
 import 'clubhouse_app.dart';
 import 'ble/chart_page.dart';
 import 'ble/bonded_page_navigator.dart';
+import 'basic_view/welcome_login.dart';
+import 'basic_view/rounded_button.dart';
 
 void main() {
   // Weather app with observer
@@ -53,7 +55,9 @@ void main() {
   // runApp(UserProfileApp());
   // runApp(ClubHouseApp());
   // runApp(ChatPage());
-  runApp(BondedApp());
+  // runApp(BondedApp());
+  // runApp(WellComeApp());
+  runApp(BasicViewApp());
 
   // runApp(CustomSliderApp());
   // runApp(PokedexApp());

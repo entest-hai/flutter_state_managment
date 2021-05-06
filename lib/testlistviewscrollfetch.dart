@@ -4,7 +4,6 @@ import 'dart:async';
 class ListViewScrollFetchApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _ListViewScrollState();
   }
 }
@@ -34,7 +33,9 @@ class _ListViewScrollState extends State<ListViewScrollFetchApp> {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
 
-    if (minScroll - currentScroll > _scrollThreshold) {
+    print("$minScroll $currentScroll $maxScroll");
+
+    if (minScroll == currentScroll) {
       fetchData();
     }
   }

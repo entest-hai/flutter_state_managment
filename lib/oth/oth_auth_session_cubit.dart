@@ -15,7 +15,7 @@ class SessionCubit extends Cubit<SessionState> {
     try {
       final userId = await authRepo.attemptAutoLogin();
       // final user = dataRepo.getUser(userId);
-      final user = userId;
+      final user = AuthCredentials(username: "HaiTran", userId: userId, email: "hai@bio-rithm.com");
       emit(Authenticated(user: user));
     } on Exception {
       emit(Unauthenticated());
@@ -26,8 +26,9 @@ class SessionCubit extends Cubit<SessionState> {
 
   void showSession(AuthCredentials credentials) {
     // final user = dataRepo.getUser(credentials.userId);
-    final user = credentials.username;
-    emit(Authenticated(user: user));
+    print("launch sessions username: ${credentials.username} token: ${credentials.userId}");
+    credentials.userId = credentials.userId.toString();
+    emit(Authenticated(user: credentials));
   }
 
   void signOut() {

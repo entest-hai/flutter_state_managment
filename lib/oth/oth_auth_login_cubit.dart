@@ -26,13 +26,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     } else if (event is LoginSubmitted) {
       yield state.copyWith(formStatus: FormSubmitting());
       try {
-        final userId = await authRepo.login(
+        final userId = await authRepo.loginOth(
           username: state.username,
           password: state.password,
         );
         yield state.copyWith(formStatus: SubmissionSuccess());
-
-        print("lanuch session view ");
         authCubit.launchSession(AuthCredentials(
           username: state.username,
           userId: userId,

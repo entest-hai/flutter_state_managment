@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
-
+import 'oth_api_service.dart';
 
 class AuthRepository {
+  final _dataservice = DataServie();
   Future<String> attemptAutoLogin() async {
     await Future.delayed(Duration(seconds: 1));
     throw Exception('not signed in');
+  }
+
+  Future<String> loginOth({
+    @required String username,
+    @required String password,
+  }) async {
+    print('try getting token from OTH');
+    final token = _dataservice.getOthToken();
+    return token;
   }
 
   Future<String> login({

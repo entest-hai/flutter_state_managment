@@ -8,6 +8,8 @@ import 'oth_auth_auth_state.dart';
 import 'oth_auth_login_view.dart';
 import 'oth_auth_confirmation_view.dart';
 import 'oth_auth_signup_view.dart';
+import 'oth_auth_session_view.dart';
+import 'oth_auth_get_token.dart';
 
 class OthAuthApp extends StatelessWidget {
   @override
@@ -45,7 +47,7 @@ class AppNavigator extends StatelessWidget {
             ),
 
           // Show session flow
-          if (state is Authenticated) MaterialPage(child: SessionView())
+          if (state is Authenticated) MaterialPage(child: SessionView(user: state.user,))
         ],
         onPopPage: (route, result) => route.didPop(result),
       );
@@ -87,27 +89,6 @@ class LoadingView extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: CircularProgressIndicator(),
-      ),
-    );
-  }
-}
-
-// Session View
-class SessionView extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Session View'),
-            TextButton(
-              child: Text('sign out'),
-              onPressed: () => BlocProvider.of<SessionCubit>(context).signOut(),
-            )
-          ],
-        ),
       ),
     );
   }

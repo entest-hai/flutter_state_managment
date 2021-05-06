@@ -28,7 +28,6 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   void launchSession(AuthCredentials credentials) {
-      print("launch sessions");
       sessionCubit.showSession(credentials);
   }
      

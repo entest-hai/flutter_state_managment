@@ -38,6 +38,8 @@ import 'ble/bonded_page_navigator.dart';
 import 'basic_view/welcome_login.dart';
 import 'basic_view/rounded_button.dart';
 import 'oth/oth_auth_app.dart';
+import 'kilo/social_profile/social_user_profile.dart';
+import 'kilo/social_app.dart';
 
 void main() {
   // Weather app with observer
@@ -53,7 +55,7 @@ void main() {
   // runApp(HistoricalCTGApp());
   // runApp(LoginAppBloc());
   // runApp(SimpleLoginApp());
-  runApp(OthAuthApp());
+  // runApp(OthAuthApp());
   // runApp(UserProfileApp());
   // runApp(ClubHouseApp());
   // runApp(ChatPage());
@@ -73,6 +75,8 @@ void main() {
   // runApp(SimpleNavigatorApp());
   // runApp(ShowModalApp());
   // runApp(TodoBlocApp());
+  // runApp(SocialApp());
+  runApp(KiloScialApp());
 
   // runApp(MultiProvider(
   //   providers: [

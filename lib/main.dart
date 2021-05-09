@@ -38,7 +38,7 @@ import 'ble/bonded_page_navigator.dart';
 import 'basic_view/welcome_login.dart';
 import 'basic_view/rounded_button.dart';
 import 'oth/oth_auth_app.dart';
-import 'kilo/social_profile/social_user_profile.dart';
+import 'kilo/social_profile/social_user_profile_view.dart';
 import 'kilo/social_app.dart';
 
 void main() {

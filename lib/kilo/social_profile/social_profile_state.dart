@@ -13,6 +13,7 @@ class ProfileState {
   String get email => user.email;
 
   final FormSubmissionStatus formStatus;
+  bool imageSourceActionSheetIsVisible;
 
   ProfileState({
     @required User user,
@@ -20,20 +21,24 @@ class ProfileState {
     String avatarPath,
     String userDescription,
     this.formStatus = const InitialFormStatus(),
-  }) : this.user = user, this.isCurrentUser = isCurrentUser, this.avatarPath = avatarPath, this.userDescription = userDescription ?? user.description;
+    imageSourceActionSheetIsVisible = false,
+  }) : this.user = user, this.isCurrentUser = isCurrentUser, this.avatarPath = avatarPath, this.userDescription = userDescription ?? user.description, 
+  this.imageSourceActionSheetIsVisible = imageSourceActionSheetIsVisible;
 
   ProfileState copyWith({
     User user,
     String avatarPath,
     String userDescription,
     FormSubmissionStatus formStatus,
+    bool imageSourceActionSheetIsVisible,
   }) {
     return ProfileState(
       user: user ?? this.user,
       isCurrentUser: this.isCurrentUser,
       avatarPath: avatarPath ?? this.avatarPath,
       userDescription: userDescription ?? this.userDescription,
-      formStatus: formStatus ?? this.formStatus
+      formStatus: formStatus ?? this.formStatus,
+      imageSourceActionSheetIsVisible: imageSourceActionSheetIsVisible ?? this.imageSourceActionSheetIsVisible,
     );
   }
 }

@@ -1,5 +1,3 @@
-import 'package:flutter_provider/oth/oth_auth_form_state.dart';
-
 abstract class FormSubmissionStatus {
   const FormSubmissionStatus();
 }

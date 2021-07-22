@@ -15,11 +15,16 @@ class GridListDemo extends StatelessWidget {
   final GridListDemo type; 
 
   // photos 
-  List<String> _photos(){
+  List<_Photo> _photos(){
     return [
-      "Hello Hai Tran",
-      "Hello Min Tran",
-      "Hello Ha Tran"
+      _Photo(assetName: "assets/images/tokyo1.jpeg",title: "tokyo",subtitle: "shybuya"),
+      _Photo(assetName: "assets/images/tokyo2.jpeg",title: "tokyo",subtitle: "shybuya"),
+      _Photo(assetName: "assets/images/tokyo3.jpeg",title: "tokyo",subtitle: "shybuya"),
+      _Photo(assetName: "assets/images/tokyo4.jpeg",title: "tokyo",subtitle: "shybuya"),
+      _Photo(assetName: "assets/images/tokyo.jpeg",title: "tokyo",subtitle: "shybuya"),
+      _Photo(assetName: "assets/images/tokyo.jpeg",title: "tokyo",subtitle: "shybuya"),
+      _Photo(assetName: "assets/images/tokyo.jpeg",title: "tokyo",subtitle: "shybuya"),
+      _Photo(assetName: "assets/images/tokyo.jpeg",title: "tokyo",subtitle: "shybuya")
     ];
   }
 
@@ -29,14 +34,35 @@ class GridListDemo extends StatelessWidget {
       appBar: AppBar(
         title: Text("GridItems"),
       ),
-      body:ListView(
-        children: _photos().map<Widget>((photo) {
-          return Card(
-            child: ListTile(
-              title: Text(photo)
-            ),
-          );
-        }).toList(),
+      body:GridView.count(
+        crossAxisCount: 2,
+        mainAxisSpacing: 8,
+        crossAxisSpacing: 8,
+        padding: const EdgeInsets.all(8),
+        childAspectRatio: 1,
+        children: _photos().map<Widget>((photo){
+            return _GridDemoPhotoItem(photo: photo,);
+          }).toList()
+      ),
+    );
+  }
+}
+
+
+class _GridDemoPhotoItem extends StatelessWidget {
+  const _GridDemoPhotoItem({
+    Key key,
+    @required this.photo,
+  }) : super(key: key);
+
+  final _Photo photo;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      child: Image.asset(
+        this.photo.assetName,
+        fit: BoxFit.cover
       ),
     );
   }

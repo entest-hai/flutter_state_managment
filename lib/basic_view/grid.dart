@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_provider/gen/assets.gen.dart';
 
 class GridApp extends StatelessWidget {
   @override
@@ -9,22 +10,45 @@ class GridApp extends StatelessWidget {
   }
 }
 
-
 class GridListDemo extends StatelessWidget {
   const GridListDemo({Key key, this.type}) : super(key: key);
-  final GridListDemo type; 
+  final GridListDemo type;
 
-  // photos 
-  List<_Photo> _photos(){
+  // photos
+  List<_Photo> _photos() {
     return [
-      _Photo(assetName: "assets/images/tokyo1.jpeg",title: "tokyo",subtitle: "shybuya"),
-      _Photo(assetName: "assets/images/tokyo2.jpeg",title: "tokyo",subtitle: "shybuya"),
-      _Photo(assetName: "assets/images/tokyo3.jpeg",title: "tokyo",subtitle: "shybuya"),
-      _Photo(assetName: "assets/images/tokyo4.jpeg",title: "tokyo",subtitle: "shybuya"),
-      _Photo(assetName: "assets/images/tokyo.jpeg",title: "tokyo",subtitle: "shybuya"),
-      _Photo(assetName: "assets/images/tokyo.jpeg",title: "tokyo",subtitle: "shybuya"),
-      _Photo(assetName: "assets/images/tokyo.jpeg",title: "tokyo",subtitle: "shybuya"),
-      _Photo(assetName: "assets/images/tokyo.jpeg",title: "tokyo",subtitle: "shybuya")
+      _Photo(
+          assetName: Assets.images.tokyo1.path,
+          title: "tokyo",
+          subtitle: "shybuya"),
+      _Photo(
+          assetName: Assets.images.tokyo2.path,
+          title: "tokyo",
+          subtitle: "shybuya"),
+      _Photo(
+          assetName: Assets.images.tokyo3.path,
+          title: "tokyo",
+          subtitle: "shybuya"),
+      _Photo(
+          assetName: Assets.images.tokyo4.path,
+          title: "tokyo",
+          subtitle: "shybuya"),
+      _Photo(
+          assetName: Assets.images.tokyo1.path,
+          title: "tokyo",
+          subtitle: "shybuya"),
+      _Photo(
+          assetName: Assets.images.tokyo2.path,
+          title: "tokyo",
+          subtitle: "shybuya"),
+      _Photo(
+          assetName: Assets.images.tokyo3.path,
+          title: "tokyo",
+          subtitle: "shybuya"),
+      _Photo(
+          assetName: Assets.images.tokyo4.path,
+          title: "tokyo",
+          subtitle: "shybuya")
     ];
   }
 
@@ -34,20 +58,20 @@ class GridListDemo extends StatelessWidget {
       appBar: AppBar(
         title: Text("GridItems"),
       ),
-      body:GridView.count(
-        crossAxisCount: 2,
-        mainAxisSpacing: 8,
-        crossAxisSpacing: 8,
-        padding: const EdgeInsets.all(8),
-        childAspectRatio: 1,
-        children: _photos().map<Widget>((photo){
-            return _GridDemoPhotoItem(photo: photo,);
-          }).toList()
-      ),
+      body: GridView.count(
+          crossAxisCount: 2,
+          mainAxisSpacing: 8,
+          crossAxisSpacing: 8,
+          padding: const EdgeInsets.all(8),
+          childAspectRatio: 1,
+          children: _photos().map<Widget>((photo) {
+            return _GridDemoPhotoItem(
+              photo: photo,
+            );
+          }).toList()),
     );
   }
 }
-
 
 class _GridDemoPhotoItem extends StatelessWidget {
   const _GridDemoPhotoItem({
@@ -60,21 +84,14 @@ class _GridDemoPhotoItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Image.asset(
-        this.photo.assetName,
-        fit: BoxFit.cover
-      ),
+      child: Image.asset(this.photo.assetName, fit: BoxFit.cover),
     );
   }
 }
 
 class _Photo {
-  _Photo({
-    this.assetName,
-    this.title,
-    this.subtitle
-  });
-  final String assetName; 
-  final String title; 
-  final String subtitle; 
+  _Photo({this.assetName, this.title, this.subtitle});
+  final String assetName;
+  final String title;
+  final String subtitle;
 }

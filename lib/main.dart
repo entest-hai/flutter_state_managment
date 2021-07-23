@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_provider/basic_view/grid.dart';
+import 'package:flutter_provider/basic_view/list.dart';
+import 'package:flutter_provider/music/musicapp.dart';
 import 'package:flutter_provider/pokedexbloc.dart';
 import 'package:flutter_provider/testlistswipe.dart';
 import 'package:flutter_provider/testnetworkrequest.dart';
@@ -76,7 +79,10 @@ void main() {
   // runApp(ShowModalApp());
   // runApp(TodoBlocApp());
   // runApp(SocialApp());
-  runApp(KiloScialApp());
+  // runApp(KiloScialApp());
+  // runApp(MusicApp());
+  // runApp(GridApp());
+  runApp(ListDemoApp());
 
   // runApp(MultiProvider(
   //   providers: [

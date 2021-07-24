@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/gallery_localizations.dart';
 import 'package:flutter_provider/basic_view/material_demo_types.dart';
+import 'package:flutter_provider/gen/assets.gen.dart';
 
 class BottomNavigationDemoApp extends StatelessWidget {
   @override
@@ -83,11 +84,15 @@ class _BottomNavigationDemoState extends State<BottomNavigationDemo>
         title: Text(_title(context)),
       ),
       body: Center(
-        child: Text("OK"),
+        child: _NavigationDestinationView(
+          key: UniqueKey(),
+          item: bottomNavigationBarItems[_currentindex.value],
+          index: _currentindex.value,
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentindex.value,
-        showSelectedLabels: true,
+        showSelectedLabels: widget.type == BottomNavigationDemoType.withLabels,
         type: BottomNavigationBarType.fixed,
         selectedItemColor: colorScheme.onPrimary,
         unselectedItemColor: colorScheme.onPrimary.withOpacity(0.38),
@@ -100,6 +105,38 @@ class _BottomNavigationDemoState extends State<BottomNavigationDemo>
           ;
         },
       ),
+    );
+  }
+}
+
+class _NavigationDestinationView extends StatelessWidget {
+  _NavigationDestinationView({Key key, this.item, this.index})
+      : super(key: key);
+  final BottomNavigationBarItem item;
+  final int index;
+  final images = [
+    Assets.images.tokyo1.path,
+    Assets.images.tokyo2.path,
+    Assets.images.tokyo3.path,
+    Assets.images.tokyo4.path,
+    Assets.images.tokyo1.path
+  ];
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        ExcludeSemantics(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.asset(images[this.index]),
+              ),
+            ),
+          ),
+        )
+      ],
     );
   }
 }

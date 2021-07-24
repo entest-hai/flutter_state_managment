@@ -61,6 +61,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/doctors/
     - assets/images/
     - assets/icons/
     - assets/
@@ -69,7 +70,19 @@ flutter:
     - assets/heartrate.txt
     - assets/whale_1.jpg
     - assets/whale_2.jpg
-    - assets/whale_3.jpg 
+    - assets/whale_3.jpg
+    - assets/mathew.png
+    - assets/cherly.png
+    - assets/bg_shape.png
+    - assets/albert.png
+    - assets/doctors/tooth.png
+    - assets/doctors/profile_img.png 
+    - assets/doctors/heart.png 
+    - assets/doctors/dr_3.png 
+    - assets/doctors/dr_2.png 
+    - assets/doctors/dr_1.png
+    - assets/doctors/brain.png
+    - assets/doctors/bone.png
 
   #   - images/a_dot_ham.jpeg
 

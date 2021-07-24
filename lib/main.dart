@@ -8,6 +8,7 @@ import 'package:flutter_provider/testlistswipe.dart';
 import 'package:flutter_provider/testnetworkrequest.dart';
 import 'package:flutter_provider/weatherapp.dart';
 import 'package:flutter_provider/basic_view/buttonnav.dart';
+import 'package:flutter_provider/doctorappointment/doctorapp.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'counterblocapp.dart';
@@ -84,7 +85,8 @@ void main() {
   // runApp(MusicApp());
   // runApp(GridApp());
   // runApp(ListDemoApp());
-  runApp(BottomNavigationDemoApp());
+  // runApp(BottomNavigationDemoApp());
+  runApp(DoctorApp());
 
   // runApp(MultiProvider(
   //   providers: [

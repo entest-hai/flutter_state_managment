@@ -6,6 +6,20 @@
 
 import 'package:flutter/widgets.dart';
 
+class $AssetsDoctorsGen {
+  const $AssetsDoctorsGen();
+
+  AssetGenImage get bone => const AssetGenImage('assets/doctors/bone.png');
+  AssetGenImage get brain => const AssetGenImage('assets/doctors/brain.png');
+  AssetGenImage get dr1 => const AssetGenImage('assets/doctors/dr_1.png');
+  AssetGenImage get dr2 => const AssetGenImage('assets/doctors/dr_2.png');
+  AssetGenImage get dr3 => const AssetGenImage('assets/doctors/dr_3.png');
+  AssetGenImage get heart => const AssetGenImage('assets/doctors/heart.png');
+  AssetGenImage get profileImg =>
+      const AssetGenImage('assets/doctors/profile_img.png');
+  AssetGenImage get tooth => const AssetGenImage('assets/doctors/tooth.png');
+}
+
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
@@ -38,12 +52,17 @@ class $AssetsImagesGen {
 class Assets {
   Assets._();
 
+  static const AssetGenImage albert = AssetGenImage('assets/albert.png');
+  static const AssetGenImage bgShape = AssetGenImage('assets/bg_shape.png');
+  static const AssetGenImage cherly = AssetGenImage('assets/cherly.png');
   static const AssetGenImage clear = AssetGenImage('assets/clear.png');
   static const AssetGenImage cloudy = AssetGenImage('assets/cloudy.png');
+  static const $AssetsDoctorsGen doctors = $AssetsDoctorsGen();
   static const String fheartrate = 'assets/fheartrate.txt';
   static const String heartrate = 'assets/heartrate.txt';
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
+  static const AssetGenImage mathew = AssetGenImage('assets/mathew.png');
   static const String mheartrate = 'assets/mheartrate.txt';
   static const String radio = 'assets/radio.json';
   static const AssetGenImage rainy = AssetGenImage('assets/rainy.png');

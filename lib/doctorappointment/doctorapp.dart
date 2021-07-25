@@ -166,7 +166,166 @@ class _DoctorState extends State<DoctorHomePage> {
                       Assets.doctors.tooth.path, "Tooth", "18 Doctors"),
                 ],
               ),
+            ),
+            Container(
+              width: size.width,
+              margin: EdgeInsets.only(top: 20, left: 20),
+              child: Stack(
+                fit: StackFit.loose,
+                children: [
+                  Container(
+                    child: Text(
+                      'Top Rate',
+                      style: TextStyle(
+                          color: Color(0xff363636),
+                          fontSize: 20,
+                          fontFamily: "Roboto",
+                          fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(right: 20, top: 1),
+                    child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          "See all",
+                          style: TextStyle(
+                            color: Color(0xff363636),
+                            fontSize: 19,
+                            fontFamily: "Roboto",
+                          ),
+                        )),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Container(
+                margin: EdgeInsets.only(left: 20, right: 20),
+                child: ListView(
+                  children: [
+                    demoTopRateDr(Assets.doctors.dr1.path, "Dr. Hai Tran",
+                        "Heart Surgeon", "4.1"),
+                    demoTopRateDr(Assets.doctors.dr1.path, "Dr. Hai Tran",
+                        "Heart Surgeon", "4.1"),
+                    demoTopRateDr(Assets.doctors.dr1.path, "Dr. Hai Tran",
+                        "Heart Surgeon", "4.1"),
+                    demoTopRateDr(Assets.doctors.dr1.path, "Dr. Hai Tran",
+                        "Heart Surgeon", "4.1"),
+                    demoTopRateDr(Assets.doctors.dr1.path, "Dr. Hai Tran",
+                        "Heart Surgeon", "4.1"),
+                    demoTopRateDr(Assets.doctors.dr1.path, "Dr. Hai Tran",
+                        "Heart Surgeon", "4.1"),
+                    demoTopRateDr(Assets.doctors.dr1.path, "Dr. Hai Tran",
+                        "Heart Surgeon", "4.1"),
+                    demoTopRateDr(Assets.doctors.dr1.path, "Dr. Hai Tran",
+                        "Heart Surgeon", "4.1"),
+                    demoTopRateDr(Assets.doctors.dr1.path, "Dr. Hai Tran",
+                        "Heart Surgeon", "4.1"),
+                    demoTopRateDr(Assets.doctors.dr1.path, "Dr. Hai Tran",
+                        "Heart Surgeon", "4.1"),
+                    demoTopRateDr(Assets.doctors.dr1.path, "Dr. Hai Tran",
+                        "Heart Surgeon", "4.1"),
+                    demoTopRateDr(Assets.doctors.dr1.path, "Dr. Hai Tran",
+                        "Heart Surgeon", "4.1"),
+                    demoTopRateDr(Assets.doctors.dr1.path, "Dr. Hai Tran",
+                        "Heart Surgeon", "4.1"),
+                    demoTopRateDr(Assets.doctors.dr1.path, "Dr. Hai Tran",
+                        "Heart Surgeon", "4.1")
+                  ],
+                ),
+              ),
             )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget demoTopRateDr(
+      String image, String name, String speciality, String rating) {
+    Size size = MediaQuery.of(context).size;
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => ItemDetailsPage()));
+      },
+      child: Container(
+        height: 90,
+        margin: EdgeInsets.only(top: 10),
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(5)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              margin: EdgeInsets.only(left: 20),
+              height: 90,
+              width: 50,
+              child: Image.asset(image),
+            ),
+            Container(
+                margin: EdgeInsets.only(left: 20, top: 10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(top: 10),
+                      child: Text(
+                        name,
+                        style: TextStyle(
+                            color: Color(0xff363636),
+                            fontSize: 17,
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w700),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 10),
+                      child: Row(
+                        children: [
+                          Container(
+                            child: Text(
+                              speciality,
+                              style: TextStyle(
+                                  color: Color(0xffababab),
+                                  fontFamily: 'Roboto',
+                                  fontWeight: FontWeight.w100),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(
+                                top: 3, left: size.width * 0.25),
+                            child: Row(
+                              children: [
+                                Container(
+                                    child: Text(
+                                  "Rating",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 12,
+                                      fontFamily: 'Roboto'),
+                                )),
+                                Container(
+                                  child: Text(
+                                    rating,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 12,
+                                      fontFamily: 'Roboto',
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ],
+                ))
           ],
         ),
       ),
@@ -210,5 +369,29 @@ class _DoctorState extends State<DoctorHomePage> {
         ],
       ),
     );
+  }
+}
+
+class ItemDetailsPage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _ItemDetailsState();
+  }
+}
+
+class _ItemDetailsState extends State<ItemDetailsPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+      backgroundColor: Theme.of(context).primaryColor,
+      leading: GestureDetector(
+        onTap: () {
+          Navigator.pop(context);
+        },
+        child: Icon(Icons.arrow_back, color: Colors.white),
+      ),
+      actions: [],
+    ));
   }
 }

@@ -38,7 +38,7 @@ class ListDemo extends StatelessWidget {
           restorationId: 'list_demo_list_view',
           padding: const EdgeInsets.symmetric(vertical: 8),
           children: [
-            for (int index = 1; index < 21; index++)
+            for (int index = 1; index < 100; index++)
               ListTile(
                 leading: ExcludeSemantics(
                   child: CircleAvatar(child: Text('$index')),

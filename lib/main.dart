@@ -84,9 +84,9 @@ void main() {
   // runApp(KiloScialApp());
   // runApp(MusicApp());
   // runApp(GridApp());
-  // runApp(ListDemoApp());
+  runApp(ListDemoApp());
   // runApp(BottomNavigationDemoApp());
-  runApp(DoctorApp());
+  // runApp(DoctorApp());
 
   // runApp(MultiProvider(
   //   providers: [

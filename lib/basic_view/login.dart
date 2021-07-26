@@ -10,8 +10,18 @@ const kPrimaryGradientColor = LinearGradient(
 );
 const kSecondaryColor = Color(0xFF979797);
 const kTextColor = Color(0xFF757575);
-
 const kAnimationDuration = Duration(milliseconds: 200);
+// Form Error
+final RegExp emailValidatorRegExp =
+    RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+const String kEmailNullError = "Please Enter your email";
+const String kInvalidEmailError = "Please Enter Valid Email";
+const String kPassNullError = "Please Enter your password";
+const String kShortPassError = "Password is too short";
+const String kMatchPassError = "Passwords don't match";
+const String kNamelNullError = "Please Enter your name";
+const String kPhoneNumberNullError = "Please Enter your phone number";
+const String kAddressNullError = "Please Enter your address";
 
 class TestSimpleLoginApp extends StatelessWidget {
   @override
@@ -74,25 +84,33 @@ class SignForm extends StatefulWidget {
 }
 
 class _SignFormState extends State<SignForm> {
+  final _formKey = GlobalKey<FormState>();
+  final List<String> errors = [];
   @override
   Widget build(BuildContext context) {
     return Form(
+        key: _formKey,
         child: Column(
-      children: [
-        buildTextFormField(),
-        SizedBox(
-          height: 20,
-        ),
-        buildPassFormField(),
-        SizedBox(
-          height: 20,
-        ),
-        MyDefaultButton(
-          text: "Continue",
-          press: () {},
-        )
-      ],
-    ));
+          children: [
+            buildTextFormField(),
+            SizedBox(
+              height: 20,
+            ),
+            buildPassFormField(),
+            SizedBox(
+              height: 20,
+            ),
+            FormError(errors: errors),
+            MyDefaultButton(
+              text: "Continue",
+              press: () {
+                if (_formKey.currentState.validate()) {
+                  _formKey.currentState.save();
+                }
+              },
+            )
+          ],
+        ));
   }
 
   // build password form field
@@ -113,6 +131,32 @@ class _SignFormState extends State<SignForm> {
   TextFormField buildTextFormField() {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
+      onChanged: (value) {
+        if ((value.isNotEmpty) && errors.contains(kEmailNullError)) {
+          setState(() {
+            errors.remove(kEmailNullError);
+          });
+        } else if (emailValidatorRegExp.hasMatch(value) &&
+            !errors.contains(kInvalidEmailError)) {
+          setState(() {
+            errors.remove(kInvalidEmailError);
+          });
+        }
+        return null;
+      },
+      validator: (value) {
+        if (value.isEmpty && !errors.contains(kEmailNullError)) {
+          setState(() {
+            errors.add(kEmailNullError);
+          });
+        } else if (!emailValidatorRegExp.hasMatch(value) &&
+            !errors.contains(kInvalidEmailError)) {
+          setState(() {
+            errors.add(kInvalidEmailError);
+          });
+        }
+        return null;
+      },
       decoration: InputDecoration(
         labelText: "Email",
         hintText: "Enter your email",
@@ -121,6 +165,39 @@ class _SignFormState extends State<SignForm> {
           svgIcon: "assets/icons/Mail.svg",
         ),
       ),
+    );
+  }
+}
+
+class FormError extends StatelessWidget {
+  const FormError({
+    Key key,
+    @required this.errors,
+  }) : super(key: key);
+
+  final List<String> errors;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: List.generate(
+          errors.length, (index) => formErrorText(error: errors[index])),
+    );
+  }
+
+  Row formErrorText({String error}) {
+    return Row(
+      children: [
+        SvgPicture.asset(
+          "assets/icons/Error.svg",
+          height: 14,
+          width: 14,
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        Text(error),
+      ],
     );
   }
 }
@@ -190,32 +267,6 @@ AppBarTheme appBarTheme() {
         color: Color(0xFF8B8B8B),
         fontSize: 18,
       )));
-}
-
-// default button
-class DefaultButton extends StatelessWidget {
-  const DefaultButton({Key key, this.text, this.press}) : super(key: key);
-  final String text;
-  final Function press;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 56,
-      child: FlatButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        color: kPrimaryColor,
-        onLongPress: this.press,
-        child: Text(
-          this.text,
-          style: TextStyle(fontSize: 18, color: Colors.white),
-        ),
-      ),
-    );
-  }
 }
 
 // New flutter button system with style inside

@@ -54,23 +54,90 @@ class Body extends StatelessWidget {
         width: double.infinity,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              Text(
-                "Welcome Back",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold),
-              ),
-              Text(
-                "Sign in with your email and password \nor continue with social media",
-                textAlign: TextAlign.center,
-              ),
-              SignForm(),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 60,
+                ),
+                Text(
+                  "Welcome Back",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  "Sign in with your email and password \nor continue with social media",
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 60,
+                ),
+                SignForm(),
+                SizedBox(
+                  height: 60,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SocialCard(
+                      icon: "assets/icons/facebook-2.svg",
+                      press: () {},
+                    ),
+                    SocialCard(
+                      icon: "assets/icons/google-icon.svg",
+                      press: () {},
+                    ),
+                    SocialCard(
+                      icon: "assets/icons/twitter.svg",
+                      press: () {},
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Don't have an account?",
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    Text(
+                      "Sign Up",
+                      style: TextStyle(fontSize: 16, color: kPrimaryColor),
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class SocialCard extends StatelessWidget {
+  const SocialCard({Key key, this.icon, this.press}) : super(key: key);
+
+  final String icon;
+  final Function press;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: press,
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 10),
+        padding: EdgeInsets.all(12),
+        height: 40,
+        width: 40,
+        decoration:
+            BoxDecoration(color: Color(0xFFF5F6F9), shape: BoxShape.circle),
+        child: SvgPicture.asset(this.icon),
       ),
     );
   }
@@ -85,6 +152,9 @@ class SignForm extends StatefulWidget {
 
 class _SignFormState extends State<SignForm> {
   final _formKey = GlobalKey<FormState>();
+  String email;
+  String password;
+  bool remember = false;
   final List<String> errors = [];
   @override
   Widget build(BuildContext context) {
@@ -94,13 +164,36 @@ class _SignFormState extends State<SignForm> {
           children: [
             buildTextFormField(),
             SizedBox(
-              height: 20,
+              height: 30,
             ),
             buildPassFormField(),
             SizedBox(
-              height: 20,
+              height: 30,
+            ),
+            Row(
+              children: [
+                Checkbox(
+                    value: remember,
+                    activeColor: kPrimaryColor,
+                    onChanged: (value) {
+                      setState(() {
+                        remember = value;
+                      });
+                    }),
+                Text("Remember me"),
+                Spacer(),
+                Text(
+                  "Forgot Password",
+                  style: TextStyle(
+                    decoration: TextDecoration.underline,
+                  ),
+                )
+              ],
             ),
             FormError(errors: errors),
+            SizedBox(
+              height: 20,
+            ),
             MyDefaultButton(
               text: "Continue",
               press: () {
@@ -108,7 +201,7 @@ class _SignFormState extends State<SignForm> {
                   _formKey.currentState.save();
                 }
               },
-            )
+            ),
           ],
         ));
   }
@@ -116,7 +209,32 @@ class _SignFormState extends State<SignForm> {
   // build password form field
   TextFormField buildPassFormField() {
     return TextFormField(
+      onSaved: (newValue) => password = newValue,
+      onChanged: (value) {
+        if (value.isNotEmpty && errors.contains(kEmailNullError)) {
+          setState(() {
+            errors.remove(kEmailNullError);
+          });
+        } else if (value.length >= 8 && errors.contains(kShortPassError)) {
+          setState(() {
+            errors.remove(kShortPassError);
+          });
+        }
+        return null;
+      },
       obscureText: true,
+      validator: (value) {
+        if (value.isEmpty && !errors.contains(kEmailNullError)) {
+          setState(() {
+            errors.add(kEmailNullError);
+          });
+        } else if (value.length < 8 && !errors.contains(kShortPassError)) {
+          setState(() {
+            errors.add(kShortPassError);
+          });
+        }
+        return null;
+      },
       decoration: InputDecoration(
           labelText: "Password",
           hintText: "Enter your password",

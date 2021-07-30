@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_provider/basic_view/forgot_password_screen.dart';
 import 'package:flutter_provider/basic_view/grid.dart';
 import 'package:flutter_provider/basic_view/list.dart';
 import 'package:flutter_provider/basic_view/login.dart';

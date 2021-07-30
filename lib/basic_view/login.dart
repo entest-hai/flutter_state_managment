@@ -29,7 +29,7 @@ class TestSimpleLoginApp extends StatelessWidget {
     return MaterialApp(
       title: "Flutter SignIn App",
       theme: theme(),
-      home: LoginScreen(),
+      home: ForgotPassScreen(),
     );
   }
 }
@@ -98,24 +98,35 @@ class Body extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Don't have an account?",
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    Text(
-                      "Sign Up",
-                      style: TextStyle(fontSize: 16, color: kPrimaryColor),
-                    )
-                  ],
-                )
+                NoAccountText()
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class NoAccountText extends StatelessWidget {
+  const NoAccountText({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "Don't have an account?",
+          style: TextStyle(fontSize: 16),
+        ),
+        Text(
+          "Sign Up",
+          style: TextStyle(fontSize: 16, color: kPrimaryColor),
+        )
+      ],
     );
   }
 }
@@ -407,6 +418,104 @@ class MyDefaultButton extends StatelessWidget {
           minimumSize: Size(double.infinity, 56),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
+    );
+  }
+}
+
+class ForgotPassScreen extends StatelessWidget {
+  static String routeName = "/forgot_password";
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Forgot Password"),
+      ),
+      body: BodyForgotPass(),
+    );
+  }
+}
+
+class BodyForgotPass extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              "Forgot Password",
+              style: TextStyle(
+                  fontSize: 28,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold),
+            ),
+            Text(
+              "Please enter your email and we will send \nyou a link to return to your account",
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(
+              height: 40,
+            ),
+            ForgotPassForm()
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ForgotPassForm extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _ForgotPassFormState();
+  }
+}
+
+class _ForgotPassFormState extends State<ForgotPassForm> {
+  List<String> errors = [];
+  String email;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        TextFormField(
+          keyboardType: TextInputType.emailAddress,
+          onSaved: (newValue) {
+            email = newValue;
+          },
+          onChanged: (value) {
+            print(value);
+          },
+          decoration: InputDecoration(
+            labelText: "Email",
+            hintText: "Enter your email",
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            suffixIcon: CustomSuffixIcon(
+              svgIcon: "assets/icons/Mail.svg",
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 30,
+        ),
+        FormError(errors: errors),
+        SizedBox(
+          height: 30,
+        ),
+        MyDefaultButton(
+          text: "Continue",
+          press: () {},
+        ),
+        SizedBox(
+          height: 30,
+        ),
+        NoAccountText()
+      ],
     );
   }
 }

@@ -29,7 +29,7 @@ class TestSimpleLoginApp extends StatelessWidget {
     return MaterialApp(
       title: "Flutter SignIn App",
       theme: theme(),
-      home: ForgotPassScreen(),
+      home: LoginScreen(),
     );
   }
 }
@@ -122,9 +122,15 @@ class NoAccountText extends StatelessWidget {
           "Don't have an account?",
           style: TextStyle(fontSize: 16),
         ),
-        Text(
-          "Sign Up",
-          style: TextStyle(fontSize: 16, color: kPrimaryColor),
+        GestureDetector(
+          onTap: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ForgotPassScreen()));
+          },
+          child: Text(
+            "Sign Up",
+            style: TextStyle(fontSize: 16, color: kPrimaryColor),
+          ),
         )
       ],
     );

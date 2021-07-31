@@ -23,6 +23,10 @@ const String kNamelNullError = "Please Enter your name";
 const String kPhoneNumberNullError = "Please Enter your phone number";
 const String kAddressNullError = "Please Enter your address";
 
+final Map<String, WidgetBuilder> routes = {
+  ForgotPassScreen.routeName: (context) => ForgotPassScreen(),
+};
+
 class TestSimpleLoginApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -30,6 +34,7 @@ class TestSimpleLoginApp extends StatelessWidget {
       title: "Flutter SignIn App",
       theme: theme(),
       home: LoginScreen(),
+      routes: routes,
     );
   }
 }
@@ -124,8 +129,7 @@ class NoAccountText extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ForgotPassScreen()));
+            Navigator.pushNamed(context, ForgotPassScreen.routeName);
           },
           child: Text(
             "Sign Up",
@@ -429,7 +433,7 @@ class MyDefaultButton extends StatelessWidget {
 }
 
 class ForgotPassScreen extends StatelessWidget {
-  static String routeName = "/forgot_password";
+  static String routeName = "/forgotpassscreen";
   @override
   Widget build(BuildContext context) {
     return Scaffold(

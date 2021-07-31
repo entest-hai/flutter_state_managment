@@ -42,6 +42,7 @@ class TestSimpleLoginApp extends StatelessWidget {
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("Login Screen"),
@@ -450,16 +451,17 @@ class BodyForgotPass extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding:
+            EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
         child: Column(
           children: [
             SizedBox(
-              height: 20,
+              height: SizeConfig.screenHeight * 0.04,
             ),
             Text(
               "Forgot Password",
               style: TextStyle(
-                  fontSize: 28,
+                  fontSize: getProportionateScreenWidth(28),
                   color: Colors.black,
                   fontWeight: FontWeight.bold),
             ),
@@ -467,9 +469,7 @@ class BodyForgotPass extends StatelessWidget {
               "Please enter your email and we will send \nyou a link to return to your account",
               textAlign: TextAlign.center,
             ),
-            SizedBox(
-              height: 40,
-            ),
+            SizedBox(height: SizeConfig.screenHeight * 0.1),
             ForgotPassForm()
           ],
         ),
@@ -511,21 +511,50 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
           ),
         ),
         SizedBox(
-          height: 30,
+          height: getProportionateScreenHeight(30),
         ),
         FormError(errors: errors),
         SizedBox(
-          height: 30,
+          height: SizeConfig.screenHeight * 0.1,
         ),
         MyDefaultButton(
           text: "Continue",
           press: () {},
         ),
         SizedBox(
-          height: 30,
+          height: SizeConfig.screenHeight * 0.1,
         ),
         NoAccountText()
       ],
     );
   }
+}
+
+class SizeConfig {
+  static MediaQueryData _mediaQueryData;
+  static double screenWidth;
+  static double screenHeight;
+  static double defaultSize;
+  static Orientation orientation;
+
+  void init(BuildContext context) {
+    _mediaQueryData = MediaQuery.of(context);
+    screenWidth = _mediaQueryData.size.width;
+    screenHeight = _mediaQueryData.size.height;
+    orientation = _mediaQueryData.orientation;
+  }
+}
+
+// Get the proportionate height as per screen size
+double getProportionateScreenHeight(double inputHeight) {
+  double screenHeight = SizeConfig.screenHeight;
+  // 812 is the layout height that designer use
+  return (inputHeight / 812.0) * screenHeight;
+}
+
+// Get the proportionate height as per screen size
+double getProportionateScreenWidth(double inputWidth) {
+  double screenWidth = SizeConfig.screenWidth;
+  // 375 is the layout width that designer use
+  return (inputWidth / 375.0) * screenWidth;
 }

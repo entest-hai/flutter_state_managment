@@ -4,6 +4,7 @@ import 'package:flutter_provider/basic_view/forgot_password_screen.dart';
 import 'package:flutter_provider/basic_view/grid.dart';
 import 'package:flutter_provider/basic_view/list.dart';
 import 'package:flutter_provider/basic_view/login.dart';
+import 'package:flutter_provider/bloc_bloc_communication/bloc_to_bloc_com_app.dart';
 import 'package:flutter_provider/music/musicapp.dart';
 import 'package:flutter_provider/pokedexbloc.dart';
 import 'package:flutter_provider/testlistswipe.dart';
@@ -89,7 +90,8 @@ void main() {
   // runApp(ListDemoApp());
   // runApp(BottomNavigationDemoApp());
   // runApp(DoctorApp());
-  runApp(TestSimpleLoginApp());
+  // runApp(TestSimpleLoginApp());
+  runApp(BlocToBlocCommApp());
 
   // runApp(MultiProvider(
   //   providers: [
